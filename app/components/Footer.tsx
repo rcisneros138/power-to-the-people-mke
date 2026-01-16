@@ -33,13 +33,13 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
+            <h3 className="text-xl mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
+                    className="text-white/70 hover:text-coral transition-colors font-medium uppercase tracking-wide text-sm"
                   >
                     {link.label}
                   </Link>
@@ -50,7 +50,7 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Stay Updated</h3>
+            <h3 className="text-xl mb-4">Stay Updated</h3>
             <p className="text-white/70 text-sm mb-4">
               Sign up for campaign news and updates.
             </p>
@@ -58,11 +58,11 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Email address"
-                className="flex-1 rounded-full px-4 py-2 text-sm bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-coral"
+                className="flex-1 px-4 py-3 text-sm bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-coral"
               />
               <button
                 type="submit"
-                className="rounded-full bg-coral px-5 py-2 text-sm font-semibold hover:bg-coral-dark transition-colors"
+                className="bg-coral px-5 py-3 text-sm font-bold uppercase tracking-wide hover:bg-coral-dark transition-all hover:scale-105"
               >
                 Subscribe
               </button>

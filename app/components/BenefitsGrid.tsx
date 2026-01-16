@@ -36,7 +36,7 @@ export default function BenefitsGrid() {
     <section className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-navy mb-4">
+          <h2 className="text-4xl sm:text-5xl text-navy mb-4">
             Why Public Power?
           </h2>
           <p className="text-lg text-navy/70 max-w-2xl mx-auto">
@@ -55,7 +55,7 @@ export default function BenefitsGrid() {
               <div className="text-4xl font-bold text-navy mb-2">
                 {benefit.stat}
               </div>
-              <h3 className="text-xl font-semibold text-navy mb-3">
+              <h3 className="text-2xl text-navy mb-3">
                 {benefit.title}
               </h3>
               <p className="text-navy/70">

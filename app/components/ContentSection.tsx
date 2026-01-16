@@ -36,7 +36,7 @@ export default function ContentSection({
             <p className="text-coral font-semibold tracking-wide uppercase text-sm mb-3">
               {label}
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-navy mb-6">
+            <h2 className="text-4xl sm:text-5xl text-navy mb-6">
               {title}
             </h2>
             <div className="text-lg text-navy/70 space-y-4">
