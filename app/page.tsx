@@ -1,65 +1,83 @@
-import Image from "next/image";
+import {
+  Header,
+  Footer,
+  Hero,
+  BenefitsGrid,
+  ContentSection,
+  CTABanner,
+  PartnersStrip,
+} from "./components";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <Header />
+
+      <main>
+        <Hero />
+
+        <BenefitsGrid />
+
+        <ContentSection
+          label="The Problem"
+          title="We Energies Puts Profits Over People"
+          imagePosition="left"
+          imagePlaceholder="High bills illustration"
+        >
+          <p>
+            Milwaukee residents pay some of the highest utility rates in the nation.
+            We Energies charges 30-40% more than Wisconsin's public utilities—and that
+            money goes straight to corporate shareholders, not better service.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <p>
+            Meanwhile, our community faces frequent outages, aging infrastructure, and
+            a utility company that's dragging its feet on clean energy. We Energies
+            generates less than 6% of its power from renewables.
+          </p>
+        </ContentSection>
+
+        <ContentSection
+          label="The Solution"
+          title="A Utility Owned By All of Us"
+          imagePosition="right"
+          imagePlaceholder="Community power illustration"
+        >
+          <p>
+            Wisconsin law (Chapter 197) gives Milwaukee the power to create a municipal
+            utility. This means a utility controlled by elected officials accountable
+            to us—not distant shareholders.
+          </p>
+          <p>
+            Public utilities across Wisconsin already serve communities like Manitowoc,
+            Sun Prairie, and Sheboygan with lower rates and better reliability. Cities
+            like Austin, Memphis, and Los Angeles prove public power works at scale.
+          </p>
+        </ContentSection>
+
+        <ContentSection
+          label="It Works"
+          title="Public Power Delivers Results"
+          imagePosition="left"
+          imagePlaceholder="Success stories illustration"
+        >
+          <p>
+            Nationally, 1 in 7 Americans are served by public utilities. In Wisconsin,
+            81 publicly owned utilities serve 11% of the state's electricity needs—with
+            better outcomes than private alternatives.
+          </p>
+          <p>
+            Public utility customers experience an average of 59 minutes of downtime per
+            year, compared to 133 minutes for private utility customers. That's real
+            reliability you can count on.
+          </p>
+        </ContentSection>
+
+        <CTABanner />
+
+        <PartnersStrip />
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 }
