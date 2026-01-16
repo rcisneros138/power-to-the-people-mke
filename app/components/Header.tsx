@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -14,8 +15,15 @@ export default function Header() {
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-navy">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.svg"
+              alt="Power to the People logo"
+              width={40}
+              height={42}
+              className="h-10 w-auto"
+            />
+            <span className="text-xl font-bold text-navy hidden sm:inline">
               Power to the People
             </span>
           </Link>

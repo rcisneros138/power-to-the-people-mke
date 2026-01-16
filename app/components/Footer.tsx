@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const quickLinks = [
   { href: "/about", label: "About" },
@@ -14,7 +15,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Power to the People MKE</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <Image
+                src="/logo.svg"
+                alt="Power to the People logo"
+                width={32}
+                height={34}
+                className="h-8 w-auto"
+              />
+              <h3 className="text-lg font-bold">Power to the People MKE</h3>
+            </div>
             <p className="text-white/70 text-sm leading-relaxed">
               A campaign calling on the City of Milwaukee to replace We Energies
               with a municipally owned and operated utility.
