@@ -47,12 +47,12 @@ export default function BenefitsGrid() {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="text-center p-8 rounded-2xl bg-cream/50"
+              className="text-center p-8 rounded-2xl bg-cream"
             >
-              <div className="inline-flex items-center justify-center text-coral mb-4">
+              <div className="inline-flex items-center justify-center text-navy-dark mb-4">
                 {benefit.icon}
               </div>
-              <div className="text-4xl font-bold text-navy mb-2">
+              <div className="text-4xl font-bold text-coral mb-2">
                 {benefit.stat}
               </div>
               <h3 className="text-xl font-semibold text-navy mb-3">

@@ -15,7 +15,7 @@ export default function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-navy">
+            <span className="text-xl font-bold text-navy-dark">
               Power to the People
             </span>
           </Link>
@@ -26,7 +26,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-navy/80 hover:text-navy transition-colors font-medium"
+                className="text-navy font-medium hover:text-coral transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-teal hover:after:w-full after:transition-all"
               >
                 {link.label}
               </Link>
@@ -40,7 +40,7 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button (placeholder) */}
-          <button className="md:hidden p-2 text-navy" aria-label="Menu">
+          <button className="md:hidden p-2 text-navy-dark" aria-label="Menu">
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
