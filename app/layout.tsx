@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue } from "next/font/google";
+import { Inter, Bebas_Neue, Spectral } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const talina = localFont({
+  src: "./fonts/Talina.otf",
+  variable: "--font-talina",
+  display: "swap",
+});
+
+const creamCake = localFont({
+  src: "./fonts/CreamCakeBold.otf",
+  variable: "--font-cream-cake",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,6 +24,12 @@ const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
+});
+
+const spectral = Spectral({
+  weight: ["400", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-spectral",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${bebasNeue.variable} ${spectral.variable} ${talina.variable} ${talina.className} ${creamCake.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

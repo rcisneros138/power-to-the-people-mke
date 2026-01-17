@@ -23,7 +23,7 @@ export default function Footer() {
                 height={34}
                 className="h-8 w-auto"
               />
-              <h3 className="text-lg font-bold">Power to the People MKE</h3>
+              <h3 className="text-lg font-extrabold">Power to the People MKE</h3>
             </div>
             <p className="text-white/70 text-sm leading-relaxed">
               A campaign calling on the City of Milwaukee to replace We Energies

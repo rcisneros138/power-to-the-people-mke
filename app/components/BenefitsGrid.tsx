@@ -52,7 +52,7 @@ export default function BenefitsGrid() {
               <div className="inline-flex items-center justify-center text-coral mb-4">
                 {benefit.icon}
               </div>
-              <div className="text-4xl font-bold text-navy mb-2">
+              <div className="text-4xl font-spectral font-extrabold text-navy mb-2">
                 {benefit.stat}
               </div>
               <h3 className="text-2xl text-navy mb-3">

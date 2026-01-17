@@ -11,6 +11,8 @@
 
   --font-family-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-family-display: var(--font-display), 'Bebas Neue', Impact, sans-serif;
+  --font-family-spectral: var(--font-spectral), 'Spectral', Georgia, serif;
+  --font-family-talina: var(--font-talina), 'Talina', serif;
 }
 
 @layer base {
@@ -24,15 +26,28 @@
   }
 
   h1, h2, h3 {
-    font-family: var(--font-family-display);
+    font-family: var(--font-family-spectral);
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    font-weight: 800;
   }
 }
 
 @layer utilities {
   .font-display {
     font-family: var(--font-family-display);
+  }
+
+  .font-spectral {
+    font-family: var(--font-family-spectral);
+  }
+
+  .font-talina {
+    font-family: var(--font-talina), 'Talina', serif !important;
+  }
+
+  .font-cream-cake {
+    font-family: var(--font-cream-cake), cursive !important;
   }
 
   .text-shadow-bold {

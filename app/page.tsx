@@ -6,6 +6,7 @@ import {
   ContentSection,
   CTABanner,
   PartnersStrip,
+  FAQ,
 } from "./components";
 
 export default function Home() {
@@ -71,6 +72,8 @@ export default function Home() {
             reliability you can count on.
           </p>
         </ContentSection>
+
+        <FAQ />
 
         <CTABanner />
 
