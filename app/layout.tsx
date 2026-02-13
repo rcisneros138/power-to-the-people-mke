@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue, Spectral } from "next/font/google";
+import { Source_Sans_3, Bebas_Neue, Spectral } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -15,9 +15,11 @@ const creamCake = localFont({
   display: "swap",
 });
 
-const inter = Inter({
+const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
 const bebasNeue = Bebas_Neue({
@@ -44,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${bebasNeue.variable} ${spectral.variable} ${talina.variable} ${talina.className} ${creamCake.variable} font-sans antialiased`}>
+      <body className={`${sourceSans3.variable} ${bebasNeue.variable} ${spectral.variable} ${talina.variable} ${creamCake.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

@@ -8,8 +8,15 @@ import {
   PartnersStrip,
   FAQ,
 } from "./components";
+import { getFAQs, getPartners } from "./lib/wordpress";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch data from WordPress at build time
+  const [faqItems, partners] = await Promise.all([
+    getFAQs(),
+    getPartners(),
+  ]);
+
   return (
     <>
       <Header />
@@ -27,12 +34,12 @@ export default function Home() {
         >
           <p>
             Milwaukee residents pay some of the highest utility rates in the nation.
-            We Energies charges 30-40% more than Wisconsin's public utilities—and that
+            We Energies charges 30-40% more than Wisconsin&apos;s public utilities—and that
             money goes straight to corporate shareholders, not better service.
           </p>
           <p>
             Meanwhile, our community faces frequent outages, aging infrastructure, and
-            a utility company that's dragging its feet on clean energy. We Energies
+            a utility company that&apos;s dragging its feet on clean energy. We Energies
             generates less than 6% of its power from renewables.
           </p>
         </ContentSection>
@@ -63,21 +70,21 @@ export default function Home() {
         >
           <p>
             Nationally, 1 in 7 Americans are served by public utilities. In Wisconsin,
-            81 publicly owned utilities serve 11% of the state's electricity needs—with
+            81 publicly owned utilities serve 11% of the state&apos;s electricity needs—with
             better outcomes than private alternatives.
           </p>
           <p>
             Public utility customers experience an average of 59 minutes of downtime per
-            year, compared to 133 minutes for private utility customers. That's real
+            year, compared to 133 minutes for private utility customers. That&apos;s real
             reliability you can count on.
           </p>
         </ContentSection>
 
-        <FAQ />
+        <FAQ items={faqItems} />
 
         <CTABanner />
 
-        <PartnersStrip />
+        <PartnersStrip partners={partners} />
       </main>
 
       <Footer />

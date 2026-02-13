@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 
-interface FAQItem {
+export interface FAQItem {
   question: string;
   answer: string;
 }
 
-const faqItems: FAQItem[] = [
+// Default FAQ items (used when WordPress data is not available)
+const defaultFaqItems: FAQItem[] = [
   {
     question: "Is this legal?",
     answer: "Yes, Chapter 197 of the Wisconsin State Statutes allows for Cities like the City of Milwaukee to engage in replacing their utility. This is an existing law on the books and we are considering advocating for it to be used by the City of Milwaukee.",
@@ -50,8 +51,15 @@ const faqItems: FAQItem[] = [
   },
 ];
 
-export default function FAQ() {
+interface FAQProps {
+  items?: FAQItem[];
+}
+
+export default function FAQ({ items }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  // Use provided items or fall back to defaults
+  const faqItems = items && items.length > 0 ? items : defaultFaqItems;
 
   const toggleItem = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);

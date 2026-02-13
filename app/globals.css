@@ -9,7 +9,7 @@
   --color-teal: #FFB966;
   --color-teal-dark: #E5A55C;
 
-  --font-family-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-family-sans: var(--font-sans), 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
   --font-family-display: var(--font-display), 'Bebas Neue', Impact, sans-serif;
   --font-family-spectral: var(--font-spectral), 'Spectral', Georgia, serif;
   --font-family-talina: var(--font-talina), 'Talina', serif;

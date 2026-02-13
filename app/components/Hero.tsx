@@ -23,7 +23,7 @@ export default function Hero() {
 
         {/* Subtitle */}
         <p className="text-lg sm:text-xl text-navy/80 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed">
-          It's time to replace We Energies with a utility owned by all of us.
+          It&apos;s time to replace We Energies with a utility owned by all of us.
           Lower bills. Better service. A cleaner future for Milwaukee.
         </p>
 

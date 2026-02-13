@@ -6,3 +6,7 @@ export { default as ContentSection } from "./ContentSection";
 export { default as CTABanner } from "./CTABanner";
 export { default as PartnersStrip } from "./PartnersStrip";
 export { default as FAQ } from "./FAQ";
+
+// Re-export types
+export type { FAQItem } from "./FAQ";
+export type { Partner } from "./PartnersStrip";
