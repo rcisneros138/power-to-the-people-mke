@@ -26,14 +26,14 @@ export default function ContentSection({
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                   </svg>
                 </div>
-                <p className="text-navy/50 text-sm">{imagePlaceholder}</p>
+                <p className="text-navy/70 text-sm">{imagePlaceholder}</p>
               </div>
             </div>
           </div>
 
           {/* Content */}
           <div className="w-full lg:w-1/2">
-            <p className="text-coral font-semibold tracking-wide uppercase text-sm mb-3">
+            <p className="text-navy font-bold tracking-wide uppercase text-sm mb-3">
               {label}
             </p>
             <h2 className="text-4xl sm:text-5xl text-navy mb-6">

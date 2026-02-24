@@ -68,11 +68,13 @@ function EventCard({ event }: { event: WPEvent }) {
   return (
     <div className="bg-white rounded-xl overflow-hidden border border-navy/5 hover:shadow-lg transition-all duration-200 flex flex-col sm:flex-row">
       {/* Date badge */}
-      <div className="flex-shrink-0 sm:w-24 bg-coral text-white flex sm:flex-col items-center justify-center p-3 sm:p-4 gap-2 sm:gap-0">
-        <span className="text-sm font-bold tracking-wider">{month}</span>
-        <span className="text-3xl font-spectral font-extrabold leading-none">{day}</span>
-        <span className="text-xs mt-1 opacity-80">{time}</span>
-      </div>
+      <time dateTime={dateStr}>
+        <div className="flex-shrink-0 sm:w-24 bg-coral flex sm:flex-col items-center justify-center p-3 sm:p-4 gap-2 sm:gap-0">
+          <span className="text-sm font-bold tracking-wider text-navy">{month}</span>
+          <span className="text-3xl font-spectral font-extrabold leading-none text-white">{day}</span>
+          <span className="text-xs mt-1 text-navy">{time}</span>
+        </div>
+      </time>
 
       {/* Event details */}
       <div className="p-6 flex-1">
@@ -80,7 +82,7 @@ function EventCard({ event }: { event: WPEvent }) {
           {event.title}
         </h3>
         {event.location && (
-          <p className="text-sm text-navy/60 mb-3 flex items-start gap-1.5">
+          <p className="text-sm text-navy/75 mb-3 flex items-start gap-1.5">
             <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -135,18 +137,18 @@ export default async function EventsPage() {
           {/* No upcoming events fallback */}
           {upcoming.length === 0 && (
             <div className="text-center py-12 mb-16 bg-white rounded-xl border border-navy/5">
-              <p className="text-navy/50 text-lg mb-2">No upcoming events scheduled.</p>
-              <p className="text-navy/40 text-sm">Check back soon or sign up for our newsletter to stay informed.</p>
+              <p className="text-navy/70 text-lg mb-2">No upcoming events scheduled.</p>
+              <p className="text-navy/70 text-sm">Check back soon or sign up for our newsletter to stay informed.</p>
             </div>
           )}
 
           {/* Past events */}
           {past.length > 0 && (
             <section>
-              <h2 className="text-2xl sm:text-3xl font-spectral font-bold text-navy mb-6 opacity-60">
+              <h2 className="text-2xl sm:text-3xl font-spectral font-bold text-navy/70 mb-6">
                 Past Events
               </h2>
-              <div className="space-y-4 opacity-60">
+              <div className="space-y-4 opacity-75">
                 {past.map((event) => (
                   <EventCard key={event.id} event={event} />
                 ))}

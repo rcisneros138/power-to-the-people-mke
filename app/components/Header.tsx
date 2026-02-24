@@ -47,7 +47,7 @@ export default function Header() {
           <div className="hidden md:flex flex-1 justify-end">
             <Link
               href="/get-involved"
-              className="rounded-full bg-coral px-6 py-2.5 text-white font-medium text-sm uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-2"
+              className="rounded-full bg-coral px-6 py-2.5 text-navy font-bold text-sm uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-2"
             >
               Get Involved
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

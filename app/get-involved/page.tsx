@@ -66,7 +66,7 @@ export default async function GetInvolvedPage() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy mb-4">
               Get Involved
             </h1>
-            <p className="text-xl text-navy/80 max-w-2xl mx-auto">
+            <p className="text-xl text-navy/90 max-w-2xl mx-auto">
               The fight for public power needs you. Here&apos;s how you can help build a better Milwaukee.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default async function GetInvolvedPage() {
             <div
               className="prose prose-lg prose-navy max-w-none
                 prose-headings:font-spectral prose-headings:text-navy
-                prose-p:text-navy/80 prose-a:text-coral"
+                prose-p:text-navy/80 prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral"
               dangerouslySetInnerHTML={{ __html: wpPage.content }}
             />
           </div>
@@ -125,7 +125,7 @@ export default async function GetInvolvedPage() {
                     id="firstName"
                     name="firstName"
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-coral transition-colors"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
                     placeholder="Your first name"
                   />
                 </div>
@@ -138,7 +138,7 @@ export default async function GetInvolvedPage() {
                     id="lastName"
                     name="lastName"
                     required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-coral transition-colors"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
                     placeholder="Your last name"
                   />
                 </div>
@@ -153,7 +153,7 @@ export default async function GetInvolvedPage() {
                   id="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-coral transition-colors"
+                  className="w-full px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
                   placeholder="you@example.com"
                 />
               </div>
@@ -166,7 +166,7 @@ export default async function GetInvolvedPage() {
                   type="text"
                   id="zip"
                   name="zip"
-                  className="w-full sm:w-40 px-4 py-3 bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-coral transition-colors"
+                  className="w-full sm:w-40 px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
                   placeholder="53202"
                   maxLength={5}
                 />
@@ -193,7 +193,7 @@ export default async function GetInvolvedPage() {
 
               <button
                 type="submit"
-                className="w-full rounded-full bg-coral px-8 py-4 text-white font-medium uppercase tracking-wider hover:bg-coral-dark transition-colors text-lg"
+                className="w-full rounded-full bg-coral px-8 py-4 text-white font-bold uppercase tracking-wider hover:bg-coral-dark transition-colors text-xl"
               >
                 Sign Me Up
               </button>

@@ -41,21 +41,21 @@ const defaultResources: Resource[] = [
   },
   {
     title: "We Energies Rate Comparison",
-    description: "How We Energies rates compare to Wisconsin's publicly owned utilities.",
+    description: "How We Energies rates compare to Wisconsin's publicly owned utilities. (Coming soon)",
     type: "doc",
-    href: "#",
+    href: "/resources",
   },
   {
     title: "Municipal Utility Case Studies",
-    description: "Success stories from Austin, Memphis, Los Angeles, and Wisconsin communities.",
+    description: "Success stories from Austin, Memphis, Los Angeles, and Wisconsin communities. (Coming soon)",
     type: "doc",
-    href: "#",
+    href: "/resources",
   },
   {
     title: "Campaign White Paper",
-    description: "Our detailed proposal for transitioning Milwaukee to public power.",
+    description: "Our detailed proposal for transitioning Milwaukee to public power. (Coming soon)",
     type: "pdf",
-    href: "#",
+    href: "/resources",
   },
 ];
 
@@ -98,7 +98,7 @@ export default async function ResourcesPage() {
             <div
               className="prose prose-lg prose-navy max-w-3xl mx-auto mb-16
                 prose-headings:font-spectral prose-headings:text-navy
-                prose-p:text-navy/80 prose-a:text-coral"
+                prose-p:text-navy/80 prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral"
               dangerouslySetInnerHTML={{ __html: wpPage.content }}
             />
           )}
@@ -122,9 +122,10 @@ export default async function ResourcesPage() {
                 <p className="text-navy/70 text-sm leading-relaxed">
                   {resource.description}
                 </p>
-                <span className="mt-4 inline-flex items-center text-coral text-sm font-medium uppercase tracking-wide">
+                <span className="mt-4 inline-flex items-center text-navy text-sm font-bold group-hover:text-coral uppercase tracking-wide">
                   {resource.type === "link" ? "Visit" : resource.type === "pdf" ? "Download" : "Read"}
-                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  {resource.type === "link" && <span className="sr-only"> (opens in new tab)</span>}
+                  <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>

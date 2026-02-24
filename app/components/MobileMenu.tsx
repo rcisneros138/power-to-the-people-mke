@@ -43,7 +43,7 @@ export default function MobileMenu() {
       {/* Hamburger / Close button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-navy"
+        className="p-2.5 -mr-2.5 text-navy"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
       >
@@ -91,7 +91,7 @@ export default function MobileMenu() {
             <NavLink
               href="/get-involved"
               onClick={close}
-              className="rounded-full bg-coral px-6 py-3 text-white font-medium text-center uppercase tracking-wider hover:bg-coral-dark transition-colors mt-2"
+              className="rounded-full bg-coral px-6 py-3 text-white font-bold text-center text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors mt-2"
             >
               Get Involved
             </NavLink>

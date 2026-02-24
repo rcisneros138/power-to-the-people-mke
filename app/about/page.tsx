@@ -63,7 +63,7 @@ export default async function AboutPage() {
               prose-p:text-navy/80 prose-p:leading-relaxed
               prose-li:text-navy/80
               prose-strong:text-navy prose-strong:font-semibold
-              prose-a:text-coral prose-a:no-underline hover:prose-a:text-coral-dark"
+              prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral"
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </div>

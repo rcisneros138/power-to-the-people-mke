@@ -30,10 +30,10 @@ export default function Hero() {
         {/* CTA Button */}
         <Link
           href="/about"
-          className="rounded-full bg-coral px-8 py-4 text-white font-medium uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3"
+          className="rounded-full bg-coral px-8 py-4 text-white font-bold text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3"
         >
           Why We Do It
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
           </svg>
         </Link>

@@ -53,7 +53,7 @@ function NewsCard({
         </div>
       )}
       <div className="p-6">
-        <time className="text-sm text-navy/50 uppercase tracking-wide">
+        <time className="text-sm text-navy/70 uppercase tracking-wide" dateTime={post.date}>
           {formatDate(post.date)}
         </time>
         <h2 className="mt-2 text-xl font-spectral font-bold text-navy">
@@ -68,7 +68,7 @@ function NewsCard({
             </p>
             <button
               onClick={onToggle}
-              className="mt-4 inline-flex items-center text-coral hover:text-coral-dark font-medium transition-colors"
+              className="mt-4 inline-flex items-center text-navy hover:text-coral font-bold transition-colors"
               aria-expanded={false}
               aria-label={`Read more about ${post.title}`}
             >
@@ -98,7 +98,7 @@ function NewsCard({
               className="mt-4 prose prose-navy prose-sm max-w-none
                 prose-p:text-navy/80 prose-p:leading-relaxed
                 prose-headings:text-navy prose-headings:font-spectral
-                prose-a:text-coral prose-a:no-underline hover:prose-a:underline
+                prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral
                 prose-strong:text-navy prose-strong:font-semibold
                 prose-ul:text-navy/80 prose-ol:text-navy/80
                 prose-li:marker:text-coral"
@@ -106,7 +106,7 @@ function NewsCard({
             />
             <button
               onClick={onToggle}
-              className="mt-6 inline-flex items-center text-coral hover:text-coral-dark font-medium transition-colors"
+              className="mt-6 inline-flex items-center text-navy hover:text-coral font-bold transition-colors"
               aria-expanded={true}
               aria-label={`Show less about ${post.title}`}
             >
@@ -147,7 +147,7 @@ export default function NewsGrid({ posts }: NewsGridProps) {
   if (posts.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-navy/50 text-lg">
+        <p className="text-navy/70 text-lg">
           No news articles available yet. Check back soon!
         </p>
       </div>
