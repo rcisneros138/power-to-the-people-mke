@@ -35,8 +35,27 @@ const spectral = Spectral({
 });
 
 export const metadata: Metadata = {
-  title: "Power to the People Milwaukee",
-  description: "A campaign to replace We Energies with a municipally owned utility",
+  metadataBase: new URL("https://powertothepeoplemke.org"),
+  title: {
+    default: "Power to the People Milwaukee",
+    template: "%s | Power to the People MKE",
+  },
+  description:
+    "A campaign to replace We Energies with a municipally owned utility. Lower bills. Better service. A cleaner future for Milwaukee.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Power to the People Milwaukee",
+    title: "Power to the People Milwaukee",
+    description:
+      "A campaign to replace We Energies with a municipally owned utility. Lower bills. Better service. A cleaner future for Milwaukee.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Power to the People Milwaukee",
+    description:
+      "A campaign to replace We Energies with a municipally owned utility. Lower bills. Better service. A cleaner future for Milwaukee.",
+  },
 };
 
 export default function RootLayout({
@@ -47,6 +66,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sourceSans3.variable} ${bebasNeue.variable} ${spectral.variable} ${talina.variable} ${creamCake.variable} font-sans antialiased`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-coral focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-medium"
+        >
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>

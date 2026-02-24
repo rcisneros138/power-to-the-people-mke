@@ -69,6 +69,8 @@ function NewsCard({
             <button
               onClick={onToggle}
               className="mt-4 inline-flex items-center text-coral hover:text-coral-dark font-medium transition-colors"
+              aria-expanded={false}
+              aria-label={`Read more about ${post.title}`}
             >
               Read more
               <svg
@@ -77,6 +79,7 @@ function NewsCard({
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -104,6 +107,8 @@ function NewsCard({
             <button
               onClick={onToggle}
               className="mt-6 inline-flex items-center text-coral hover:text-coral-dark font-medium transition-colors"
+              aria-expanded={true}
+              aria-label={`Show less about ${post.title}`}
             >
               <svg
                 className="w-4 h-4 mr-1"
@@ -111,6 +116,7 @@ function NewsCard({
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={2}
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"

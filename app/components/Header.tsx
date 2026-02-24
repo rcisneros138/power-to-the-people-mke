@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import MobileMenu from "./MobileMenu";
+import NavLink from "./NavLink";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -11,7 +13,7 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <header className="bg-cream border-b border-navy/10">
+    <header className="bg-cream border-b border-navy/10 relative">
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-28 items-center">
           {/* Logo */}
@@ -30,13 +32,14 @@ export default function Header() {
           {/* Desktop Navigation - Centered */}
           <div className="hidden md:flex md:items-center md:gap-10">
             {navLinks.map((link) => (
-              <Link
+              <NavLink
                 key={link.href}
                 href={link.href}
                 className="text-navy hover:text-coral transition-colors font-medium text-sm uppercase tracking-wider"
+                activeClassName="text-coral"
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
           </div>
 
@@ -47,18 +50,14 @@ export default function Header() {
               className="rounded-full bg-coral px-6 py-2.5 text-white font-medium text-sm uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-2"
             >
               Get Involved
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
             </Link>
           </div>
 
-          {/* Mobile menu button (placeholder) */}
-          <button className="md:hidden p-2 text-navy" aria-label="Menu">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          {/* Mobile menu */}
+          <MobileMenu />
         </div>
       </nav>
     </header>

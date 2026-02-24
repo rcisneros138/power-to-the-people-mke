@@ -19,10 +19,10 @@ export default function ContentSection({
         <div className={`flex flex-col ${imagePosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row"} gap-12 items-center`}>
           {/* Image placeholder */}
           <div className="w-full lg:w-1/2">
-            <div className="aspect-square bg-gradient-to-br from-coral/20 to-navy/20 rounded-2xl flex items-center justify-center">
+            <div className="aspect-square bg-gradient-to-br from-coral/20 to-navy/20 rounded-2xl flex items-center justify-center" role="presentation">
               <div className="text-center p-8">
                 <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-coral/30 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <svg className="w-16 h-16 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                   </svg>
                 </div>

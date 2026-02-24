@@ -54,7 +54,7 @@ export default function Footer() {
             <p className="text-white/70 text-sm mb-4">
               Sign up for campaign news and updates.
             </p>
-            <form className="flex gap-2">
+            <form className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Email address"

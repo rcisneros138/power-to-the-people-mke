@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import { Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn why Milwaukee should replace We Energies with a publicly owned utility. Lower rates, better reliability, and democratic control.",
+  openGraph: {
+    title: "About | Power to the People MKE",
+    description:
+      "Learn why Milwaukee should replace We Energies with a publicly owned utility.",
+  },
+};
 
 // Default content when WordPress page is not available
 const defaultContent = {
@@ -38,7 +50,7 @@ export default async function AboutPage() {
     <>
       <Header />
 
-      <main className="bg-cream min-h-screen">
+      <main id="main-content" className="bg-cream min-h-screen">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-12">
             {title}

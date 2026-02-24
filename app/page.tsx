@@ -21,7 +21,7 @@ export default async function Home() {
     <>
       <Header />
 
-      <main>
+      <main id="main-content">
         <Hero />
 
         <BenefitsGrid />
