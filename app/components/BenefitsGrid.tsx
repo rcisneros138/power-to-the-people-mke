@@ -1,3 +1,5 @@
+import AnimateOnScroll from "./AnimateOnScroll";
+
 const benefits = [
   {
     icon: (
@@ -35,33 +37,34 @@ export default function BenefitsGrid() {
   return (
     <section className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl sm:text-5xl text-navy mb-4">
-            Why Public Power?
-          </h2>
-          <p className="text-lg text-navy/70 max-w-2xl mx-auto">
-            Across Wisconsin and the nation, publicly owned utilities deliver better results for communities.
-          </p>
-        </div>
+        <AnimateOnScroll animation="fade-up">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl sm:text-5xl text-navy mb-4">
+              Why Public Power?
+            </h2>
+            <p className="text-lg text-navy/70 max-w-2xl mx-auto">
+              Across Wisconsin and the nation, publicly owned utilities deliver better results for communities.
+            </p>
+          </div>
+        </AnimateOnScroll>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {benefits.map((benefit, index) => (
-            <div
-              key={index}
-              className="text-center p-8 rounded-2xl bg-cream/50"
-            >
-              <div className="inline-flex items-center justify-center text-coral mb-4">
-                {benefit.icon}
+            <AnimateOnScroll key={index} animation="fade-up" delay={index * 100}>
+              <div className="text-center p-8 rounded-2xl bg-cream/50">
+                <div className="inline-flex items-center justify-center text-coral mb-4">
+                  {benefit.icon}
+                </div>
+                <div className="text-4xl font-spectral font-extrabold text-navy mb-2">
+                  {benefit.stat}
+                </div>
+                <h3 className="text-2xl text-navy mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-navy/70">
+                  {benefit.description}
+                </p>
               </div>
-              <div className="text-4xl font-spectral font-extrabold text-navy mb-2">
-                {benefit.stat}
-              </div>
-              <h3 className="text-2xl text-navy mb-3">
-                {benefit.title}
-              </h3>
-              <p className="text-navy/70">
-                {benefit.description}
-              </p>
-            </div>
+            </AnimateOnScroll>
           ))}
         </div>
       </div>

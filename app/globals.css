@@ -64,3 +64,39 @@
     text-shadow: 3px 3px 0 var(--color-coral);
   }
 }
+
+/* Scroll-triggered entrance animations */
+@keyframes scroll-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scroll-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.scroll-animate { opacity: 0; }
+.scroll-animate.is-visible {
+  animation-duration: var(--scroll-duration, 600ms);
+  animation-delay: var(--scroll-delay, 0ms);
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+.scroll-animate.is-visible[data-animation="fade-up"] { animation-name: scroll-fade-up; }
+.scroll-animate.is-visible[data-animation="fade-in"] { animation-name: scroll-fade-in; }
+
+/* Hero CSS-only entrance (above the fold, no JS) */
+.hero-entrance { animation: scroll-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-entrance-d1 { animation: scroll-fade-up 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-entrance-d2 { animation: scroll-fade-up 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-animate, .hero-entrance, .hero-entrance-d1, .hero-entrance-d2 {
+    opacity: 1 !important; transform: none !important; animation: none !important;
+  }
+}
+/* No-JS fallback */
+@media (scripting: none) {
+  .scroll-animate { opacity: 1 !important; transform: none !important; }
+}

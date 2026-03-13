@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header, Footer } from "../components";
+import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
 
 export const metadata: Metadata = {
@@ -63,12 +63,14 @@ export default async function GetInvolvedPage() {
         {/* Hero */}
         <div className="bg-teal py-16 sm:py-20">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy mb-4">
-              Get Involved
-            </h1>
-            <p className="text-xl text-navy/90 max-w-2xl mx-auto">
-              The fight for public power needs you. Here&apos;s how you can help build a better Milwaukee.
-            </p>
+            <AnimateOnScroll animation="fade-up">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy mb-4">
+                Get Involved
+              </h1>
+              <p className="text-xl text-navy/90 max-w-2xl mx-auto">
+                The fight for public power needs you. Here&apos;s how you can help build a better Milwaukee.
+              </p>
+            </AnimateOnScroll>
           </div>
         </div>
 
@@ -87,24 +89,24 @@ export default async function GetInvolvedPage() {
         {/* Ways to help */}
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {waysToHelp.map((item) => (
-              <div
-                key={item.title}
-                className="bg-white rounded-xl p-8 border border-navy/5"
-              >
-                <div className="text-coral mb-4">{item.icon}</div>
-                <h3 className="text-2xl font-spectral font-bold text-navy mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-navy/70 leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+            {waysToHelp.map((item, index) => (
+              <AnimateOnScroll key={item.title} animation="fade-up" delay={index * 100}>
+                <div className="bg-white rounded-xl p-8 border border-navy/5">
+                  <div className="text-coral mb-4">{item.icon}</div>
+                  <h3 className="text-2xl font-spectral font-bold text-navy mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-navy/70 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
 
         {/* Volunteer signup form */}
+        <AnimateOnScroll animation="fade-up">
         <div className="bg-navy-dark py-16 sm:py-20">
           <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl sm:text-4xl font-spectral font-bold text-white text-center mb-3">
@@ -200,6 +202,7 @@ export default async function GetInvolvedPage() {
             </form>
           </div>
         </div>
+        </AnimateOnScroll>
       </main>
 
       <Footer />

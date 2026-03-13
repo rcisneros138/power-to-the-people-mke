@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header, Footer, CTABanner } from "../components";
+import { AnimateOnScroll, Header, Footer, CTABanner } from "../components";
 import { getPage } from "../lib/wordpress";
 
 interface Resource {
@@ -86,12 +86,14 @@ export default async function ResourcesPage() {
 
       <main className="bg-cream min-h-screen" id="main-content">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-4">
-            Resources
-          </h1>
-          <p className="text-center text-navy/70 max-w-2xl mx-auto mb-12 text-lg">
-            Learn more about the case for public power in Milwaukee. Download reports, read the law, and explore the evidence.
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-4">
+              Resources
+            </h1>
+            <p className="text-center text-navy/70 max-w-2xl mx-auto mb-12 text-lg">
+              Learn more about the case for public power in Milwaukee. Download reports, read the law, and explore the evidence.
+            </p>
+          </AnimateOnScroll>
 
           {/* WordPress content if available */}
           {wpPage?.content && (
@@ -105,9 +107,9 @@ export default async function ResourcesPage() {
 
           {/* Resource cards grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {defaultResources.map((resource) => (
+            {defaultResources.map((resource, index) => (
+              <AnimateOnScroll key={resource.title} animation="fade-up" delay={index * 80}>
               <a
-                key={resource.title}
                 href={resource.href}
                 target={resource.type === "link" ? "_blank" : undefined}
                 rel={resource.type === "link" ? "noopener noreferrer" : undefined}
@@ -130,16 +132,19 @@ export default async function ResourcesPage() {
                   </svg>
                 </span>
               </a>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
 
-        <CTABanner
-          title="Have a resource to share?"
-          description="Help us build our library of evidence for public power."
-          buttonText="Contact Us"
-          buttonHref="/get-involved"
-        />
+        <AnimateOnScroll animation="fade-up">
+          <CTABanner
+            title="Have a resource to share?"
+            description="Help us build our library of evidence for public power."
+            buttonText="Contact Us"
+            buttonHref="/get-involved"
+          />
+        </AnimateOnScroll>
       </main>
 
       <Footer />

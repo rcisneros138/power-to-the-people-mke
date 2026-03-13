@@ -5,7 +5,7 @@ export default function Hero() {
     <section className="bg-teal min-h-[80vh] flex items-center justify-center py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         {/* Stacked Typography */}
-        <div className="mb-10 sm:mb-12 uppercase">
+        <div className="mb-10 sm:mb-12 uppercase hero-entrance">
           <p className="text-4xl sm:text-5xl lg:text-6xl font-talina text-navy tracking-wide mb-2">
             Take Our
           </p>
@@ -22,7 +22,7 @@ export default function Hero() {
         </div>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-navy/80 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed">
+        <p className="text-lg sm:text-xl text-navy/80 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed hero-entrance-d1">
           It&apos;s time to replace We Energies with a utility owned by all of us.
           Lower bills. Better service. A cleaner future for Milwaukee.
         </p>
@@ -30,7 +30,7 @@ export default function Hero() {
         {/* CTA Button */}
         <Link
           href="/about"
-          className="rounded-full bg-coral px-8 py-4 text-white font-bold text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3"
+          className="rounded-full bg-coral px-8 py-4 text-white font-bold text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3 hero-entrance-d2"
         >
           Why We Do It
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

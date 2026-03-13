@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header, Footer, CTABanner } from "../components";
+import { AnimateOnScroll, Header, Footer, CTABanner } from "../components";
 import type { Partner } from "../components";
 import { getPartners } from "../lib/wordpress";
 
@@ -51,18 +51,20 @@ export default async function PartnersPage() {
 
       <main id="main-content" className="bg-cream min-h-screen">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-4">
-            Coalition Partners
-          </h1>
-          <p className="text-center text-navy/70 max-w-2xl mx-auto mb-16 text-lg">
-            Power to the People is a coalition of Milwaukee organizations united in the fight for energy democracy. Together, we represent thousands of Milwaukee residents demanding public power.
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-4">
+              Coalition Partners
+            </h1>
+            <p className="text-center text-navy/70 max-w-2xl mx-auto mb-16 text-lg">
+              Power to the People is a coalition of Milwaukee organizations united in the fight for energy democracy. Together, we represent thousands of Milwaukee residents demanding public power.
+            </p>
+          </AnimateOnScroll>
 
           {/* Partner grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {partners.map((partner) => (
+            {partners.map((partner, index) => (
+              <AnimateOnScroll key={partner.name} animation="fade-up" delay={index * 60}>
               <div
-                key={partner.name}
                 className="bg-white rounded-xl p-6 flex flex-col items-center justify-center text-center border border-navy/5 hover:shadow-md transition-all duration-200 min-h-[160px]"
               >
                 {partner.logo ? (
@@ -86,16 +88,19 @@ export default async function PartnersPage() {
                   </>
                 )}
               </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
 
-        <CTABanner
-          title="Want your organization to join the coalition?"
-          description="We welcome labor unions, environmental groups, community organizations, and civic groups who support public power for Milwaukee."
-          buttonText="Become a Partner"
-          buttonHref="/get-involved"
-        />
+        <AnimateOnScroll animation="fade-up">
+          <CTABanner
+            title="Want your organization to join the coalition?"
+            description="We welcome labor unions, environmental groups, community organizations, and civic groups who support public power for Milwaukee."
+            buttonText="Become a Partner"
+            buttonHref="/get-involved"
+          />
+        </AnimateOnScroll>
       </main>
 
       <Footer />

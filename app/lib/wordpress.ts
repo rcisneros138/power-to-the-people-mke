@@ -9,6 +9,22 @@ const wpSiteUrl = endpoint ? endpoint.replace(/\/graphql$/, "") : "";
 // Create GraphQL client
 const client = new GraphQLClient(endpoint);
 
+// Decode HTML entities (&#8220; → ", &amp; → &, etc.)
+const htmlEntities: Record<string, string> = {
+  "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"',
+  "&#039;": "'", "&apos;": "'", "&ndash;": "–", "&mdash;": "—",
+  "&lsquo;": "\u2018", "&rsquo;": "\u2019",
+  "&ldquo;": "\u201C", "&rdquo;": "\u201D",
+  "&nbsp;": " ", "&hellip;": "…",
+};
+
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCharCode(parseInt(code, 16)))
+    .replace(/&[a-zA-Z]+;/g, (entity) => htmlEntities[entity] ?? entity);
+}
+
 // Helper to get WordPress post URL
 export function getPostUrl(slug: string): string {
   return wpSiteUrl ? `${wpSiteUrl}/${slug}` : "#";
@@ -41,11 +57,14 @@ export interface WPPage {
 export interface WPFAQItem {
   question: string;
   answer: string;
+  order?: number;
 }
 
 export interface WPPartner {
   name: string;
   shortName: string;
+  websiteUrl?: string;
+  order?: number;
   logo?: {
     sourceUrl: string;
     altText: string;
@@ -60,6 +79,8 @@ export interface WPEvent {
   date: string;
   location?: string;
   eventDate?: string;
+  eventTime?: string;
+  eventUrl?: string;
 }
 
 // GraphQL Queries
@@ -135,6 +156,7 @@ const GET_FAQS = gql`
       nodes {
         title
         content
+        faqOrder
       }
     }
   }
@@ -145,12 +167,16 @@ const GET_PARTNERS = gql`
     partners(first: 50) {
       nodes {
         title
-        partnerFields {
-          shortName
-          logo {
+        featuredImage {
+          node {
             sourceUrl
             altText
           }
+        }
+        partnerFields {
+          shortName
+          websiteUrl
+          order
         }
       }
     }
@@ -168,7 +194,9 @@ const GET_EVENTS = gql`
         date
         eventFields {
           eventDate
+          eventTime
           location
+          eventUrl
         }
       }
     }
@@ -206,6 +234,7 @@ interface FAQsResponse {
     nodes: {
       title: string;
       content: string;
+      faqOrder: number;
     }[];
   };
 }
@@ -214,12 +243,16 @@ interface PartnersResponse {
   partners: {
     nodes: {
       title: string;
-      partnerFields: {
-        shortName: string;
-        logo?: {
+      featuredImage?: {
+        node: {
           sourceUrl: string;
           altText: string;
         };
+      };
+      partnerFields: {
+        shortName: string;
+        websiteUrl: string;
+        order: number;
       };
     }[];
   };
@@ -235,7 +268,9 @@ interface EventsResponse {
       date: string;
       eventFields: {
         eventDate: string;
+        eventTime: string;
         location: string;
+        eventUrl: string;
       };
     }[];
   };
@@ -310,10 +345,13 @@ export async function getFAQs(): Promise<WPFAQItem[]> {
 
   try {
     const data = await client.request<FAQsResponse>(GET_FAQS);
-    return data.faqs.nodes.map((node) => ({
-      question: node.title,
-      answer: node.content.replace(/<\/?[^>]+(>|$)/g, ""), // Strip HTML tags
-    }));
+    return data.faqs.nodes
+      .sort((a, b) => (a.faqOrder ?? 0) - (b.faqOrder ?? 0))
+      .map((node) => ({
+        question: node.title,
+        answer: decodeHtmlEntities(node.content.replace(/<\/?[^>]+(>|$)/g, "")).trim(),
+        order: node.faqOrder ?? 0,
+      }));
   } catch (error) {
     console.error("Error fetching FAQs:", error);
     return [];
@@ -330,7 +368,9 @@ export async function getPartners(): Promise<WPPartner[]> {
     return data.partners.nodes.map((node) => ({
       name: node.title,
       shortName: node.partnerFields?.shortName || node.title,
-      logo: node.partnerFields?.logo,
+      websiteUrl: node.partnerFields?.websiteUrl,
+      order: node.partnerFields?.order ?? 0,
+      logo: node.featuredImage?.node,
     }));
   } catch (error) {
     console.error("Error fetching partners:", error);
@@ -352,7 +392,9 @@ export async function getEvents(first = 10): Promise<WPEvent[]> {
       content: node.content,
       date: node.date,
       eventDate: node.eventFields?.eventDate,
+      eventTime: node.eventFields?.eventTime,
       location: node.eventFields?.location,
+      eventUrl: node.eventFields?.eventUrl,
     }));
   } catch (error) {
     console.error("Error fetching events:", error);

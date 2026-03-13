@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header, Footer, CTABanner } from "../components";
+import { AnimateOnScroll, Header, Footer, CTABanner } from "../components";
 import { getEvents, WPEvent } from "../lib/wordpress";
 
 export const metadata: Metadata = {
@@ -113,12 +113,14 @@ export default async function EventsPage() {
 
       <main className="bg-cream min-h-screen" id="main-content">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-4">
-            Events
-          </h1>
-          <p className="text-center text-navy/70 max-w-2xl mx-auto mb-12 text-lg">
-            Join us at meetings, rallies, canvassing events, and community forums across Milwaukee.
-          </p>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-4">
+              Events
+            </h1>
+            <p className="text-center text-navy/70 max-w-2xl mx-auto mb-12 text-lg">
+              Join us at meetings, rallies, canvassing events, and community forums across Milwaukee.
+            </p>
+          </AnimateOnScroll>
 
           {/* Upcoming events */}
           {upcoming.length > 0 && (
@@ -127,8 +129,10 @@ export default async function EventsPage() {
                 Upcoming Events
               </h2>
               <div className="space-y-4">
-                {upcoming.map((event) => (
-                  <EventCard key={event.id} event={event} />
+                {upcoming.map((event, index) => (
+                  <AnimateOnScroll key={event.id} animation="fade-up" delay={index * 80}>
+                    <EventCard event={event} />
+                  </AnimateOnScroll>
                 ))}
               </div>
             </section>
@@ -149,20 +153,24 @@ export default async function EventsPage() {
                 Past Events
               </h2>
               <div className="space-y-4 opacity-75">
-                {past.map((event) => (
-                  <EventCard key={event.id} event={event} />
+                {past.map((event, index) => (
+                  <AnimateOnScroll key={event.id} animation="fade-up" delay={index * 80}>
+                    <EventCard event={event} />
+                  </AnimateOnScroll>
                 ))}
               </div>
             </section>
           )}
         </div>
 
-        <CTABanner
-          title="Want to host an event?"
-          description="We'll help you organize a community forum, house party, or canvassing event in your neighborhood."
-          buttonText="Get in Touch"
-          buttonHref="/get-involved"
-        />
+        <AnimateOnScroll animation="fade-up">
+          <CTABanner
+            title="Want to host an event?"
+            description="We'll help you organize a community forum, house party, or canvassing event in your neighborhood."
+            buttonText="Get in Touch"
+            buttonHref="/get-involved"
+          />
+        </AnimateOnScroll>
       </main>
 
       <Footer />

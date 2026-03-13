@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header, Footer } from "../components";
+import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
 
 export const metadata: Metadata = {
@@ -52,10 +52,13 @@ export default async function AboutPage() {
 
       <main id="main-content" className="bg-cream min-h-screen">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-12">
-            {title}
-          </h1>
+          <AnimateOnScroll animation="fade-up">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy text-center mb-12">
+              {title}
+            </h1>
+          </AnimateOnScroll>
 
+          <AnimateOnScroll animation="fade-up" delay={100}>
           <div
             className="prose prose-lg prose-navy max-w-none
               prose-headings:font-spectral prose-headings:text-navy
@@ -66,6 +69,7 @@ export default async function AboutPage() {
               prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral"
             dangerouslySetInnerHTML={{ __html: content }}
           />
+          </AnimateOnScroll>
         </div>
       </main>
 

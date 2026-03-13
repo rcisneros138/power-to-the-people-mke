@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Header, Footer } from "../../components";
+import { AnimateOnScroll, Header, Footer } from "../../components";
 import { getPostBySlug, getAllPostSlugs } from "../../lib/wordpress";
 
 interface PageProps {
@@ -67,17 +67,19 @@ export default async function NewsPostPage({ params }: PageProps) {
 
       <main id="main-content" className="bg-cream min-h-screen">
         <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <header className="mb-12 text-center">
-            <time
-              className="text-sm text-navy/70 uppercase tracking-wide font-bold"
-              dateTime={post.date}
-            >
-              {formatDate(post.date)}
-            </time>
-            <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy leading-tight">
-              {post.title}
-            </h1>
-          </header>
+          <AnimateOnScroll animation="fade-up">
+            <header className="mb-12 text-center">
+              <time
+                className="text-sm text-navy/70 uppercase tracking-wide font-bold"
+                dateTime={post.date}
+              >
+                {formatDate(post.date)}
+              </time>
+              <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy leading-tight">
+                {post.title}
+              </h1>
+            </header>
+          </AnimateOnScroll>
 
           {post.featuredImage && (
             <div className="mb-12 -mx-4 sm:mx-0">
@@ -90,17 +92,19 @@ export default async function NewsPostPage({ params }: PageProps) {
             </div>
           )}
 
-          <div
-            className="prose prose-lg prose-navy max-w-none
-              prose-headings:font-spectral prose-headings:text-navy
-              prose-h2:text-2xl prose-h2:sm:text-3xl prose-h2:mt-12 prose-h2:mb-4
-              prose-p:text-navy/80 prose-p:leading-relaxed
-              prose-li:text-navy/80
-              prose-strong:text-navy prose-strong:font-semibold
-              prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral
-              prose-img:rounded-lg"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <AnimateOnScroll animation="fade-up" delay={100}>
+            <div
+              className="prose prose-lg prose-navy max-w-none
+                prose-headings:font-spectral prose-headings:text-navy
+                prose-h2:text-2xl prose-h2:sm:text-3xl prose-h2:mt-12 prose-h2:mb-4
+                prose-p:text-navy/80 prose-p:leading-relaxed
+                prose-li:text-navy/80
+                prose-strong:text-navy prose-strong:font-semibold
+                prose-a:text-navy prose-a:underline prose-a:decoration-coral hover:prose-a:text-coral
+                prose-img:rounded-lg"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          </AnimateOnScroll>
 
           <nav className="mt-16 pt-8 border-t border-navy/10" aria-label="Back to news">
             <Link
