@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
+
+const PETITION_URL = "https://actionnetwork.org/petitions/power-to-the-people";
+const CONTACT_REPS_URL =
+  "https://dsamke.solidarity.tech/power-to-the-people-alder-email-mobilization";
 
 export const metadata: Metadata = {
   title: "Get Involved",
@@ -13,7 +18,15 @@ export const metadata: Metadata = {
   },
 };
 
-const waysToHelp = [
+type WayToHelp = {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  href: string;
+  external?: boolean;
+};
+
+const waysToHelp: WayToHelp[] = [
   {
     icon: (
       <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
@@ -22,15 +35,7 @@ const waysToHelp = [
     ),
     title: "Volunteer",
     description: "Join our canvassing teams, help at events, or assist with outreach. Every hour you give helps build the movement.",
-  },
-  {
-    icon: (
-      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
-      </svg>
-    ),
-    title: "Spread the Word",
-    description: "Talk to your neighbors, share on social media, and help us reach every corner of Milwaukee with the message of public power.",
+    href: "#volunteer-signup",
   },
   {
     icon: (
@@ -40,6 +45,21 @@ const waysToHelp = [
     ),
     title: "Contact Your Reps",
     description: "Let your alderperson and city officials know you support public power. We'll give you the talking points and contact info.",
+    href: CONTACT_REPS_URL,
+    external: true,
+  },
+  {
+    icon: (
+      <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" />
+      </svg>
+    ),
+    title: "Spread the Word",
+    description: "Talk to your neighbors, share on social media, and help us reach every corner of Milwaukee with the message of public power.",
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      "Milwaukee deserves public power. Sign the petition:"
+    )}&url=${encodeURIComponent(PETITION_URL)}`,
+    external: true,
   },
   {
     icon: (
@@ -49,6 +69,8 @@ const waysToHelp = [
     ),
     title: "Donate",
     description: "Help fund canvassing materials, event spaces, and campaign resources. Every dollar goes directly to the campaign.",
+    href: "https://donorbox.org/power-to-the-people-mke",
+    external: true,
   },
 ];
 
@@ -67,9 +89,20 @@ export default async function GetInvolvedPage() {
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-spectral font-bold text-navy mb-4">
                 Get Involved
               </h1>
-              <p className="text-xl text-navy/90 max-w-2xl mx-auto">
+              <p className="text-xl text-navy/90 max-w-2xl mx-auto mb-8">
                 The fight for public power needs you. Here&apos;s how you can help build a better Milwaukee.
               </p>
+              <a
+                href={PETITION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-coral px-8 py-4 text-white font-bold text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3"
+              >
+                Sign The Petition
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </a>
             </AnimateOnScroll>
           </div>
         </div>
@@ -89,25 +122,34 @@ export default async function GetInvolvedPage() {
         {/* Ways to help */}
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {waysToHelp.map((item, index) => (
-              <AnimateOnScroll key={item.title} animation="fade-up" delay={index * 100}>
-                <div className="bg-white rounded-xl p-8 border border-navy/5">
-                  <div className="text-coral mb-4">{item.icon}</div>
-                  <h3 className="text-2xl font-spectral font-bold text-navy mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-navy/70 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </AnimateOnScroll>
-            ))}
+            {waysToHelp.map((item, index) => {
+              const externalProps = item.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {};
+              return (
+                <AnimateOnScroll key={item.title} animation="fade-up" delay={index * 100}>
+                  <a
+                    href={item.href}
+                    {...externalProps}
+                    className="group block bg-white rounded-xl p-8 border border-navy/5 hover:border-coral hover:shadow-lg transition-all h-full"
+                  >
+                    <div className="text-coral mb-4">{item.icon}</div>
+                    <h3 className="text-2xl font-spectral font-bold text-navy mb-2 group-hover:text-coral transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-navy/70 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </a>
+                </AnimateOnScroll>
+              );
+            })}
           </div>
         </div>
 
         {/* Volunteer signup form */}
         <AnimateOnScroll animation="fade-up">
-        <div className="bg-navy-dark py-16 sm:py-20">
+        <div id="volunteer-signup" className="bg-navy-dark py-16 sm:py-20 scroll-mt-28">
           <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl sm:text-4xl font-spectral font-bold text-white text-center mb-3">
               Sign Up to Volunteer

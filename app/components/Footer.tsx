@@ -48,26 +48,23 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Petition CTA */}
           <div>
-            <h3 className="text-xl mb-4">Stay Updated</h3>
+            <h3 className="text-xl mb-4">Sign The Petition</h3>
             <p className="text-white/70 text-sm mb-4">
-              Sign up for campaign news and updates.
+              Add your name to demand public power for Milwaukee.
             </p>
-            <form className="flex flex-col sm:flex-row gap-2">
-              <input
-                type="email"
-                placeholder="Email address"
-                aria-label="Email address"
-                className="flex-1 px-4 py-3 text-sm bg-white/10 border border-white/40 text-white placeholder:text-white/70 focus:outline-none focus:border-coral"
-              />
-              <button
-                type="submit"
-                className="bg-coral text-navy px-5 py-3 text-sm font-bold uppercase tracking-wide hover:bg-coral-dark transition-all hover:scale-105"
-              >
-                Subscribe
-              </button>
-            </form>
+            <a
+              href="https://actionnetwork.org/petitions/power-to-the-people"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-coral text-navy px-5 py-3 text-sm font-bold uppercase tracking-wide hover:bg-coral-dark transition-all hover:scale-105"
+            >
+              Sign The Petition
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </a>
           </div>
         </div>
 

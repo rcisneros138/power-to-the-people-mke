@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/news", label: "News" },
   { href: "/events", label: "Events" },
   { href: "/partners", label: "Partners" },
+  { href: "/get-involved", label: "Get Involved" },
 ];
 
 export default function MobileMenu() {
@@ -88,13 +89,15 @@ export default function MobileMenu() {
                 {link.label}
               </NavLink>
             ))}
-            <NavLink
-              href="/get-involved"
+            <a
+              href="https://actionnetwork.org/petitions/power-to-the-people"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={close}
               className="rounded-full bg-coral px-6 py-3 text-white font-bold text-center text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors mt-2"
             >
-              Get Involved
-            </NavLink>
+              Sign The Petition
+            </a>
           </div>
         </nav>
       </div>

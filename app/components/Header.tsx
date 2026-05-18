@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/news", label: "News" },
   { href: "/events", label: "Events" },
   { href: "/partners", label: "Partners" },
+  { href: "/get-involved", label: "Get Involved" },
 ];
 
 export default function Header() {
@@ -43,17 +44,19 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Get Involved CTA */}
+          {/* Sign The Petition CTA */}
           <div className="hidden md:flex flex-1 justify-end">
-            <Link
-              href="/get-involved"
+            <a
+              href="https://actionnetwork.org/petitions/power-to-the-people"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-coral px-6 py-2.5 text-navy font-bold text-sm uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-2"
             >
-              Get Involved
+              Sign The Petition
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile menu */}

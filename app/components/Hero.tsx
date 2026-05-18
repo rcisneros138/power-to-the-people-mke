@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Hero() {
   return (
     <section className="bg-teal min-h-[80vh] flex items-center justify-center py-16 sm:py-20">
@@ -28,15 +26,17 @@ export default function Hero() {
         </p>
 
         {/* CTA Button */}
-        <Link
-          href="/about"
+        <a
+          href="https://actionnetwork.org/petitions/power-to-the-people"
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-full bg-coral px-8 py-4 text-white font-bold text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3 hero-entrance-d2"
         >
-          Why We Do It
+          Sign The Petition
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
           </svg>
-        </Link>
+        </a>
       </div>
     </section>
   );
