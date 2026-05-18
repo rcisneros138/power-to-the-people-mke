@@ -13,45 +13,6 @@ export const metadata: Metadata = {
   },
 };
 
-const defaultEvents: WPEvent[] = [
-  {
-    id: "1",
-    slug: "community-meeting-march",
-    title: "Community Meeting: The Case for Public Power",
-    content: "Join us for a community discussion about why Milwaukee should replace We Energies with a municipally owned utility. Learn about Wisconsin Chapter 197 and how other cities have successfully transitioned to public power.",
-    date: "2026-03-15T18:00:00",
-    eventDate: "2026-03-15T18:00:00",
-    location: "Milwaukee Public Library - Central Branch, 814 W Wisconsin Ave",
-  },
-  {
-    id: "2",
-    slug: "canvassing-kickoff",
-    title: "Neighborhood Canvassing Kickoff",
-    content: "Help us spread the word door-to-door in Milwaukee neighborhoods. Training provided for new volunteers. We'll cover talking points, FAQ responses, and canvassing best practices.",
-    date: "2026-03-22T10:00:00",
-    eventDate: "2026-03-22T10:00:00",
-    location: "Cesar Chavez Community Center, 2221 S Cesar Chavez Dr",
-  },
-  {
-    id: "3",
-    slug: "town-hall-energy-costs",
-    title: "Town Hall: Milwaukee Energy Costs",
-    content: "A public forum examining We Energies rate increases and their impact on Milwaukee families. Featuring presentations from energy policy experts and community testimony.",
-    date: "2026-04-05T14:00:00",
-    eventDate: "2026-04-05T14:00:00",
-    location: "Sherman Phoenix, 3536 W Fond du Lac Ave",
-  },
-  {
-    id: "4",
-    slug: "coalition-planning-session",
-    title: "Coalition Planning Session",
-    content: "Monthly coalition meeting for partner organizations. We'll discuss campaign strategy, upcoming actions, and coordinate efforts across the movement.",
-    date: "2026-04-12T17:30:00",
-    eventDate: "2026-04-12T17:30:00",
-    location: "Milwaukee DSA Office",
-  },
-];
-
 function formatEventDate(dateString: string): { month: string; day: string; time: string } {
   const date = new Date(dateString);
   return {
@@ -99,8 +60,7 @@ function EventCard({ event }: { event: WPEvent }) {
 }
 
 export default async function EventsPage() {
-  const wpEvents = await getEvents(20);
-  const events = wpEvents.length > 0 ? wpEvents : defaultEvents;
+  const events: WPEvent[] = await getEvents(20);
 
   // Split into upcoming and past based on current date
   const now = new Date();
@@ -142,7 +102,7 @@ export default async function EventsPage() {
           {upcoming.length === 0 && (
             <div className="text-center py-12 mb-16 bg-white rounded-xl border border-navy/5">
               <p className="text-navy/70 text-lg mb-2">No upcoming events scheduled.</p>
-              <p className="text-navy/70 text-sm">Check back soon or sign up for our newsletter to stay informed.</p>
+              <p className="text-navy/70 text-sm">Check back soon, or follow us on social for updates.</p>
             </div>
           )}
 
