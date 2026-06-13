@@ -4,13 +4,17 @@ import { getPosts } from "../lib/wordpress";
 import NewsGrid from "./NewsGrid";
 
 export const metadata: Metadata = {
-  title: "News",
+  title: "News & Campaign Updates",
   description:
-    "Latest news and updates from the Power to the People Milwaukee campaign for public power.",
+    "Latest news, announcements, and updates from the Power to the People Milwaukee campaign for a publicly owned utility.",
+  alternates: { canonical: "/news" },
   openGraph: {
-    title: "News | Power to the People MKE",
+    url: "/news",
+    type: "website",
+    title: "News & Updates | Power to the People MKE",
     description:
       "Latest news from the campaign for public power in Milwaukee.",
+    images: ["/opengraph-image"],
   },
 };
 

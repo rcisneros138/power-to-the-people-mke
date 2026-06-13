@@ -3,13 +3,16 @@ import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About the Public Power Campaign",
   description:
-    "Learn why Milwaukee should replace We Energies with a publicly owned utility. Lower rates, better reliability, and democratic control.",
+    "Learn why Milwaukee should replace We Energies with a publicly owned municipal utility. Lower rates, better reliability, and democratic control under Wisconsin Chapter 197.",
+  alternates: { canonical: "/about" },
   openGraph: {
-    title: "About | Power to the People MKE",
+    url: "/about",
+    title: "About the Public Power Campaign | Power to the People MKE",
     description:
-      "Learn why Milwaukee should replace We Energies with a publicly owned utility.",
+      "Learn why Milwaukee should replace We Energies with a publicly owned municipal utility.",
+    images: ["/opengraph-image"],
   },
 };
 

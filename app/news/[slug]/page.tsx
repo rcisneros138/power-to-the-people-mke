@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Script from "next/script";
 import { AnimateOnScroll, Header, Footer } from "../../components";
 import { getPostBySlug, getAllPostSlugs } from "../../lib/wordpress";
+
+const SITE_URL = "https://powertothepeoplemke.org";
+const SITE_NAME = "Power to the People Milwaukee";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -30,16 +34,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const excerpt = post.excerpt.replace(/<[^>]*>/g, "").trim();
+  const canonical = `/news/${slug}`;
 
   return {
     title: post.title,
     description: excerpt || `Read "${post.title}" on Power to the People MKE.`,
+    alternates: { canonical },
     openGraph: {
+      type: "article",
+      url: canonical,
       title: `${post.title} | Power to the People MKE`,
       description: excerpt || `Read "${post.title}" on Power to the People MKE.`,
-      ...(post.featuredImage && {
-        images: [{ url: post.featuredImage.node.sourceUrl }],
-      }),
+      publishedTime: post.date,
+      images: post.featuredImage
+        ? [{ url: post.featuredImage.node.sourceUrl }]
+        : ["/opengraph-image"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: excerpt || `Read "${post.title}" on Power to the People MKE.`,
     },
   };
 }
@@ -61,8 +75,37 @@ export default async function NewsPostPage({ params }: PageProps) {
     notFound();
   }
 
+  const articleUrl = `${SITE_URL}/news/${slug}`;
+  const plainExcerpt = post.excerpt.replace(/<[^>]*>/g, "").trim();
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: post.title,
+    description: plainExcerpt || undefined,
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
+    image: post.featuredImage ? [post.featuredImage.node.sourceUrl] : undefined,
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.svg` },
+    },
+  };
+
   return (
     <>
+      <Script
+        id={`schema-article-${slug}`}
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Header />
 
       <main id="main-content" className="bg-cream min-h-screen">

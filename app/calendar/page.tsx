@@ -17,13 +17,16 @@ const SOLIDARITY_TECH_PUBLIC_URL =
   "https://dsamke.solidarity.tech/event-calendar";
 
 export const metadata: Metadata = {
-  title: "Calendar",
+  title: "Events & Calendar",
   description:
     "Upcoming meetings, rallies, canvassing, and community forums for public power in Milwaukee. RSVP for events directly through our Solidarity Tech calendar.",
+  alternates: { canonical: "/calendar" },
   openGraph: {
-    title: "Calendar | Power to the People MKE",
+    url: "/calendar",
+    title: "Events & Calendar | Power to the People MKE",
     description:
       "Upcoming events for the Milwaukee public power campaign.",
+    images: ["/opengraph-image"],
   },
 };
 

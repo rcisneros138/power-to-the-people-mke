@@ -37,6 +37,16 @@
     outline: 2px solid var(--color-coral);
     outline-offset: 2px;
   }
+
+  /* Calendar theme tokens — overridable per-mount via inline style */
+  :root {
+    --cal-primary: var(--color-coral);
+    --cal-primary-fg: #ffffff;
+    --cal-surface: var(--color-cream);
+    --cal-text: var(--color-navy);
+    --cal-muted: rgb(19 48 32 / 0.7);
+    --cal-border: rgb(19 48 32 / 0.15);
+  }
 }
 
 @layer utilities {
@@ -90,12 +100,54 @@
 .hero-entrance-d1 { animation: scroll-fade-up 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .hero-entrance-d2 { animation: scroll-fade-up 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
+/* Rising-line chart — drawn when its scroll-animate parent becomes visible */
+.rising-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.rising-label { opacity: 0; transform: translateY(-6px); }
+
+@keyframes rising-line-draw { to { stroke-dashoffset: 0; } }
+@keyframes rising-label-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-animate.is-visible .rising-line {
+  animation: rising-line-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+}
+.scroll-animate.is-visible .rising-label {
+  animation: rising-label-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .scroll-animate, .hero-entrance, .hero-entrance-d1, .hero-entrance-d2 {
     opacity: 1 !important; transform: none !important; animation: none !important;
   }
+  .rising-line { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .rising-label { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
+
+/* Calendar component primitives */
+.cal-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.5rem; height: 2.5rem; padding: 0 0.75rem;
+  border-radius: 9999px;
+  background: var(--cal-surface);
+  color: var(--cal-text);
+  border: 1px solid var(--cal-border);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+.cal-btn:hover { background: var(--cal-primary); color: var(--cal-primary-fg); }
+.cal-tab {
+  padding: 0.4rem 0.9rem; border-radius: 9999px;
+  background: transparent; color: var(--cal-text);
+  border: 1px solid var(--cal-border);
+  font-size: 0.875rem; font-weight: 600; cursor: pointer;
+}
+.cal-tab-active { background: var(--cal-primary); color: var(--cal-primary-fg); border-color: var(--cal-primary); }
 /* No-JS fallback */
 @media (scripting: none) {
   .scroll-animate { opacity: 1 !important; transform: none !important; }

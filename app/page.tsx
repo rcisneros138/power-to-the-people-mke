@@ -8,6 +8,7 @@ import {
   CTABanner,
   PartnersStrip,
   FAQ,
+  RisingLineChart,
 } from "./components";
 import { getFAQs, getPartners } from "./lib/wordpress";
 
@@ -32,7 +33,7 @@ export default async function Home() {
             label="The Problem"
             title="We Energies Puts Profits Over People"
             imagePosition="left"
-            imagePlaceholder="High bills illustration"
+            media={<RisingLineChart />}
           >
             <p>
               Milwaukee residents pay some of the highest utility rates in the nation.
@@ -52,7 +53,12 @@ export default async function Home() {
             label="The Solution"
             title="A Utility Owned By All of Us"
             imagePosition="right"
-            imagePlaceholder="Community power illustration"
+            stat={{
+              value: "Ch. 197",
+              label: "Wisconsin law already gives Milwaukee the right",
+              sublabel:
+                "Chapter 197 lays out the legal path for cities to create their own publicly owned utility.",
+            }}
           >
             <p>
               Wisconsin law (Chapter 197) gives Milwaukee the power to create a municipal
@@ -72,7 +78,12 @@ export default async function Home() {
             label="It Works"
             title="Public Power Delivers Results"
             imagePosition="left"
-            imagePlaceholder="Success stories illustration"
+            stat={{
+              value: "59 min",
+              label: "Average yearly outage on public utilities",
+              sublabel:
+                "Compared to 133 minutes per year on private utilities — more than double the downtime.",
+            }}
           >
             <p>
               Nationally, 1 in 7 Americans are served by public utilities. In Wisconsin,

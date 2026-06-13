@@ -1,7 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Source_Sans_3, Bebas_Neue, Spectral } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+
+const SITE_URL = "https://powertothepeoplemke.org";
+const SITE_NAME = "Power to the People Milwaukee";
+const SITE_DESCRIPTION =
+  "A Milwaukee campaign to replace We Energies with a publicly owned municipal utility. Lower bills, better reliability, and a cleaner future for Milwaukee.";
 
 const talina = localFont({
   src: "./fonts/Talina.otf",
@@ -35,27 +41,94 @@ const spectral = Spectral({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://powertothepeoplemke.org"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Power to the People Milwaukee",
-    template: "%s | Power to the People MKE",
+    default: `${SITE_NAME} — Public Power for Milwaukee`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "A campaign to replace We Energies with a municipally owned utility. Lower bills. Better service. A cleaner future for Milwaukee.",
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "public power Milwaukee",
+    "municipal utility Milwaukee",
+    "We Energies alternative",
+    "Milwaukee energy democracy",
+    "Chapter 197 Wisconsin",
+    "Power to the People MKE",
+    "Milwaukee DSA",
+    "publicly owned utility",
+    "energy justice Milwaukee",
+  ],
+  category: "politics",
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Power to the People Milwaukee",
-    title: "Power to the People Milwaukee",
-    description:
-      "A campaign to replace We Energies with a municipally owned utility. Lower bills. Better service. A cleaner future for Milwaukee.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Public Power for Milwaukee`,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Power to the People Milwaukee",
-    description:
-      "A campaign to replace We Energies with a municipally owned utility. Lower bills. Better service. A cleaner future for Milwaukee.",
+    title: `${SITE_NAME} — Public Power for Milwaukee`,
+    description: SITE_DESCRIPTION,
   },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#133020",
+  colorScheme: "light",
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  alternateName: "Power to the People MKE",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  description: SITE_DESCRIPTION,
+  areaServed: {
+    "@type": "City",
+    name: "Milwaukee",
+    containedInPlace: {
+      "@type": "State",
+      name: "Wisconsin",
+    },
+  },
+  sameAs: [
+    "https://milwaukeedsa.org",
+    "https://dsamke.solidarity.tech/event-calendar",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  inLanguage: "en-US",
 };
 
 export default function RootLayout({
@@ -73,6 +146,18 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
+        <Script
+          id="schema-organization"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <Script
+          id="schema-website"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </body>
     </html>
   );

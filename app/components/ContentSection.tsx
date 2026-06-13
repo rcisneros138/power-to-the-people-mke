@@ -1,9 +1,17 @@
+interface Stat {
+  value: string;
+  label: string;
+  sublabel?: string;
+  source?: string;
+}
+
 interface ContentSectionProps {
   label: string;
   title: string;
   children: React.ReactNode;
   imagePosition?: "left" | "right";
-  imagePlaceholder?: string;
+  stat?: Stat;
+  media?: React.ReactNode;
 }
 
 export default function ContentSection({
@@ -11,24 +19,56 @@ export default function ContentSection({
   title,
   children,
   imagePosition = "left",
-  imagePlaceholder = "Illustration",
+  stat,
+  media,
 }: ContentSectionProps) {
   return (
     <section className="py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className={`flex flex-col ${imagePosition === "right" ? "lg:flex-row-reverse" : "lg:flex-row"} gap-12 items-center`}>
-          {/* Image placeholder */}
           <div className="w-full lg:w-1/2">
-            <div className="aspect-square bg-gradient-to-br from-coral/20 to-navy/20 rounded-2xl flex items-center justify-center" role="presentation">
-              <div className="text-center p-8">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-coral/30 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                  </svg>
-                </div>
-                <p className="text-navy/70 text-sm">{imagePlaceholder}</p>
+            {media ? (
+              media
+            ) : (
+            <div
+              className="aspect-square bg-teal rounded-2xl flex items-center justify-center p-8 sm:p-12 relative overflow-hidden"
+              role="presentation"
+            >
+              <div
+                className="absolute inset-0 opacity-[0.08]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 1px 1px, #133020 1px, transparent 0)",
+                  backgroundSize: "24px 24px",
+                }}
+                aria-hidden="true"
+              />
+              <div className="relative text-center max-w-md">
+                {stat ? (
+                  <>
+                    <div className="font-talina text-navy text-7xl sm:text-8xl lg:text-9xl leading-[0.85] tracking-tight uppercase text-shadow-bold">
+                      {stat.value}
+                    </div>
+                    <p className="mt-6 font-spectral font-bold text-navy text-xl sm:text-2xl leading-snug">
+                      {stat.label}
+                    </p>
+                    {stat.sublabel && (
+                      <p className="mt-3 text-navy/70 text-base leading-relaxed">
+                        {stat.sublabel}
+                      </p>
+                    )}
+                    {stat.source && (
+                      <p className="mt-4 text-navy/60 text-xs uppercase tracking-wide font-bold">
+                        {stat.source}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-navy/70 text-sm">Illustration</p>
+                )}
               </div>
             </div>
+            )}
           </div>
 
           {/* Content */}

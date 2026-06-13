@@ -8,13 +8,16 @@ const CONTACT_REPS_URL =
   "https://dsamke.solidarity.tech/power-to-the-people-alder-email-mobilization";
 
 export const metadata: Metadata = {
-  title: "Get Involved",
+  title: "Get Involved — Join the Public Power Campaign",
   description:
-    "Volunteer, donate, or spread the word for public power in Milwaukee. Sign up to join the campaign.",
+    "Sign the petition, volunteer, donate, or contact your alder. Join Milwaukee's campaign to replace We Energies with a publicly owned utility.",
+  alternates: { canonical: "/get-involved" },
   openGraph: {
+    url: "/get-involved",
     title: "Get Involved | Power to the People MKE",
     description:
-      "Join the campaign for public power in Milwaukee.",
+      "Join the Milwaukee public power campaign — sign, volunteer, or donate.",
+    images: ["/opengraph-image"],
   },
 };
 

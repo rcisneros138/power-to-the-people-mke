@@ -6,11 +6,14 @@ import { getPartners } from "../lib/wordpress";
 export const metadata: Metadata = {
   title: "Coalition Partners",
   description:
-    "Milwaukee organizations united in the fight for energy democracy and public power.",
+    "Milwaukee organizations united in the fight for energy democracy and public power — labor unions, climate groups, and community organizations backing the campaign.",
+  alternates: { canonical: "/partners" },
   openGraph: {
+    url: "/partners",
     title: "Coalition Partners | Power to the People MKE",
     description:
       "Milwaukee organizations united in the fight for energy democracy.",
+    images: ["/opengraph-image"],
   },
 };
 
