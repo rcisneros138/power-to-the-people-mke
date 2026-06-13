@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     title: "Resources | Power to the People MKE",
     description:
       "Reports, legal documents, and evidence for public power in Milwaukee.",
+    images: ["/opengraph-image"],
   },
 };
 
@@ -61,23 +62,14 @@ const defaultResources: Resource[] = [
   },
 ];
 
-const typeIcons: Record<Resource["type"], React.ReactNode> = {
-  pdf: (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-    </svg>
-  ),
-  link: (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.654a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364l1.757 1.757" />
-    </svg>
-  ),
-  doc: (
-    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-    </svg>
-  ),
-};
+// Single paper icon used for every resource card — consistent visual rhythm
+// across the grid. Resource.type still drives the CTA label below
+// (Visit / Download / Read) and the link target.
+const PaperIcon = () => (
+  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+  </svg>
+);
 
 export default async function ResourcesPage() {
   const wpPage = await getPage("resources");
@@ -118,7 +110,7 @@ export default async function ResourcesPage() {
                 className="group block bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-navy/5 hover:border-coral/20"
               >
                 <div className="text-coral mb-4 group-hover:scale-110 transition-transform duration-200 inline-block">
-                  {typeIcons[resource.type]}
+                  <PaperIcon />
                 </div>
                 <h3 className="text-xl font-spectral font-bold text-navy mb-2 group-hover:text-coral transition-colors">
                   {resource.title}
