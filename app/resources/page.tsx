@@ -10,10 +10,12 @@ interface Resource {
 }
 
 export const metadata: Metadata = {
-  title: "Resources",
+  title: "Public Power Resources & Research",
   description:
-    "Reports, legal documents, and evidence supporting the case for public power in Milwaukee.",
+    "Reports, legal documents (Wisconsin Chapter 197), studies, and evidence supporting the case for a publicly owned utility in Milwaukee.",
+  alternates: { canonical: "/resources" },
   openGraph: {
+    url: "/resources",
     title: "Resources | Power to the People MKE",
     description:
       "Reports, legal documents, and evidence for public power in Milwaukee.",
@@ -113,7 +115,7 @@ export default async function ResourcesPage() {
                 href={resource.href}
                 target={resource.type === "link" ? "_blank" : undefined}
                 rel={resource.type === "link" ? "noopener noreferrer" : undefined}
-                className="group bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-navy/5 hover:border-coral/20"
+                className="group block bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-navy/5 hover:border-coral/20"
               >
                 <div className="text-coral mb-4 group-hover:scale-110 transition-transform duration-200 inline-block">
                   {typeIcons[resource.type]}
