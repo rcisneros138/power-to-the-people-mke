@@ -4,18 +4,20 @@ export default function Hero() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         {/* Stacked Typography */}
         <div className="mb-10 sm:mb-12 uppercase hero-entrance">
-          <p className="text-4xl sm:text-5xl lg:text-6xl font-talina text-navy tracking-wide mb-2">
-            Take Our
-          </p>
-          <h1 className="text-7xl sm:text-8xl lg:text-[10rem] xl:text-[12rem] font-talina text-navy leading-[0.85] tracking-tight text-shadow-bold">
-            Power
+          <h1 className="font-talina text-navy">
+            <span className="block text-6xl sm:text-7xl lg:text-9xl xl:text-[10rem] leading-[0.85] tracking-tight text-shadow-bold">
+              Power
+            </span>
+            <span className="block text-2xl sm:text-3xl lg:text-4xl tracking-wide my-2 sm:my-3">
+              to the
+            </span>
+            <span className="block text-6xl sm:text-7xl lg:text-9xl xl:text-[10rem] leading-[0.85] tracking-tight text-shadow-bold">
+              People
+            </span>
           </h1>
-          <p className="text-4xl sm:text-5xl lg:text-6xl font-talina text-navy tracking-wide mt-2">
-            Back
-          </p>
-          {/* Script accent */}
-          <p className="text-3xl sm:text-4xl lg:text-5xl font-cream-cake text-navy/80 mt-6 tracking-normal normal-case">
-            Milwaukee
+          {/* Chapter attribution */}
+          <p className="text-base sm:text-lg lg:text-xl font-cream-cake text-navy/80 mt-6 tracking-normal normal-case max-w-3xl mx-auto leading-snug">
+            A Milwaukee Democratic Socialists of America Campaign
           </p>
         </div>
 
