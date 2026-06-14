@@ -9,6 +9,8 @@ import {
   PartnersStrip,
   FAQ,
   RisingLineChart,
+  HandshakeTile,
+  OutageClocks,
 } from "./components";
 import { getFAQs, getPartners } from "./lib/wordpress";
 
@@ -53,12 +55,7 @@ export default async function Home() {
             label="The Solution"
             title="A Utility Owned By All of Us"
             imagePosition="right"
-            stat={{
-              value: "Ch. 197",
-              label: "Wisconsin law already gives Milwaukee the right",
-              sublabel:
-                "Chapter 197 lays out the legal path for cities to create their own publicly owned utility.",
-            }}
+            media={<HandshakeTile />}
           >
             <p>
               Wisconsin law (Chapter 197) gives Milwaukee the power to create a municipal
@@ -78,12 +75,7 @@ export default async function Home() {
             label="It Works"
             title="Public Power Delivers Results"
             imagePosition="left"
-            stat={{
-              value: "59 min",
-              label: "Average yearly outage on public utilities",
-              sublabel:
-                "Compared to 133 minutes per year on private utilities — more than double the downtime.",
-            }}
+            media={<OutageClocks />}
           >
             <p>
               Nationally, 1 in 7 Americans are served by public utilities. In Wisconsin,
