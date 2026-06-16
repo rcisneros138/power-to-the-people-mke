@@ -1,11 +1,22 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
 
 const PETITION_URL = "https://actionnetwork.org/petitions/power-to-the-people";
 const CONTACT_REPS_URL =
   "https://dsamke.solidarity.tech/power-to-the-people-alder-email-mobilization";
+
+// Embedded volunteer interest form — official ST embed pattern is
+// `<page-url>/embed`; `?breakout=true` makes the form's post-submit
+// redirect the parent page instead of stranding the user inside the iframe.
+// Requires the height-broadcast script to be pasted into the ST page's
+// Page Settings → Head HTML (same setup as the event-calendar embed).
+const SOLIDARITY_TECH_FORM_URL =
+  "https://dsamke.solidarity.tech/power-to-the-people-interest-form/embed?breakout=true";
+const SOLIDARITY_TECH_FORM_PUBLIC_URL =
+  "https://dsamke.solidarity.tech/power-to-the-people-interest-form";
 
 export const metadata: Metadata = {
   title: "Get Involved — Join the Public Power Campaign",
@@ -150,107 +161,68 @@ export default async function GetInvolvedPage() {
           </div>
         </div>
 
-        {/* Volunteer signup form */}
+        {/* Volunteer signup form — embedded from Solidarity Tech */}
         <AnimateOnScroll animation="fade-up">
         <div id="volunteer-signup" className="bg-navy-dark py-16 sm:py-20 scroll-mt-28">
-          <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl sm:text-4xl font-spectral font-bold text-white text-center mb-3">
               Sign Up to Volunteer
             </h2>
             <p className="text-white/70 text-center mb-10">
-              Fill out the form below and we&apos;ll be in touch about upcoming opportunities.
+              Fill out the interest form and a campaign leader will reach out to you.
             </p>
 
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-white/80 mb-1.5">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
-                    placeholder="Your first name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-white/80 mb-1.5">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    required
-                    className="w-full px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
-                    placeholder="Your last name"
-                  />
-                </div>
-              </div>
+            <div className="bg-white rounded-xl overflow-hidden shadow-sm">
+              <iframe
+                id="solidarity-volunteer-form"
+                src={SOLIDARITY_TECH_FORM_URL}
+                title="Power to the People MKE — volunteer interest form"
+                className="w-full block border-0"
+                // Tall placeholder to minimize jank — the postMessage receiver
+                // below resizes to the form's actual height once ST broadcasts it.
+                style={{ minHeight: 1400 }}
+                loading="lazy"
+              />
+            </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-1.5">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
-                  placeholder="you@example.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="zip" className="block text-sm font-medium text-white/80 mb-1.5">
-                  Zip Code
-                </label>
-                <input
-                  type="text"
-                  id="zip"
-                  name="zip"
-                  className="w-full sm:w-40 px-4 py-3 bg-white/10 border border-white/40 text-white placeholder:text-white/60 focus:outline-none focus:border-coral transition-colors"
-                  placeholder="53202"
-                  maxLength={5}
-                />
-              </div>
-
-              <fieldset>
-                <legend className="block text-sm font-medium text-white/80 mb-3">
-                  I&apos;m interested in:
-                </legend>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {["Canvassing", "Events & rallies", "Social media outreach", "Policy research", "Graphic design", "Other"].map((interest) => (
-                    <label key={interest} className="flex items-center gap-2.5 text-white/80 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="interests"
-                        value={interest}
-                        className="w-4 h-4 rounded border-white/30 bg-white/10 text-coral focus:ring-coral"
-                      />
-                      <span className="text-sm">{interest}</span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-
-              <button
-                type="submit"
-                className="w-full rounded-full bg-coral px-8 py-4 text-white font-bold uppercase tracking-wider hover:bg-coral-dark transition-colors text-xl"
+            <p className="mt-4 text-center text-sm text-white/70">
+              Having trouble viewing the form?{" "}
+              <a
+                href={SOLIDARITY_TECH_FORM_PUBLIC_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-coral underline hover:text-coral-dark transition-colors"
               >
-                Sign Me Up
-              </button>
-            </form>
+                Open it in a new tab
+              </a>
+              .
+            </p>
           </div>
         </div>
         </AnimateOnScroll>
       </main>
 
       <Footer />
+
+      {/*
+        Solidarity Tech broadcasts `postMessage` height updates from inside the
+        iframe (the height-broadcast script must be pasted into the ST form
+        page's Page Settings → Head HTML). Target by id so this stays robust
+        if another iframe is ever added to this page. +20px buffer matches
+        ST's recommended snippet.
+      */}
+      <Script id="solidarity-tech-form-resize-receiver" strategy="afterInteractive">
+        {`
+          window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'solidarity-tech-resize') {
+              var iframe = document.getElementById('solidarity-volunteer-form');
+              if (iframe) {
+                iframe.style.height = (event.data.height + 20) + 'px';
+              }
+            }
+          });
+        `}
+      </Script>
     </>
   );
 }
