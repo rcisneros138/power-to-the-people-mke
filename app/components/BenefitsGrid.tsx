@@ -9,7 +9,7 @@ const benefits = [
     ),
     stat: "30-40%",
     title: "Lower Bills",
-    description: "Public utilities consistently deliver lower rates than private monopolies like We Energies.",
+    description: "Public utilities charge lower rates than private monopolies like We Energies.",
   },
   {
     icon: (
@@ -29,7 +29,7 @@ const benefits = [
     ),
     stat: "100%",
     title: "Climate Action",
-    description: "Democratic control means we decide our energy future—not corporate shareholders.",
+    description: "Democratic control means we decide our energy future, not corporate shareholders.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function BenefitsGrid() {
               Why Public Power?
             </h2>
             <p className="text-lg text-navy/70 max-w-2xl mx-auto">
-              Across Wisconsin and the nation, publicly owned utilities deliver better results for communities.
+              Across Wisconsin and the nation, public utilities charge lower rates and have fewer outages than private ones.
             </p>
           </div>
         </AnimateOnScroll>

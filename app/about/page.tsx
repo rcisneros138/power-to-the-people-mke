@@ -20,13 +20,13 @@ export const metadata: Metadata = {
 const defaultContent = {
   title: "About Power to the People",
   content: `
-    <p>Power to the People is a coalition of Milwaukee community organizations working to create a publicly-owned municipal utility. We believe that essential services like electricity should be controlled by the people who use them, not distant shareholders seeking profit.</p>
+    <p>Power to the People is a coalition of Milwaukee community organizations working to create a publicly owned municipal utility. We believe essential services like electricity should be controlled by the people who use them, not distant shareholders seeking profit.</p>
 
     <h2>Our Mission</h2>
     <p>We are working to replace We Energies with a municipal utility owned and operated by the City of Milwaukee. Under Wisconsin law (Chapter 197), cities have the right to create their own public utilities. We're advocating for Milwaukee to exercise this right.</p>
 
     <h2>Why Public Power?</h2>
-    <p>Across the nation, publicly-owned utilities consistently deliver:</p>
+    <p>Across the country, publicly owned utilities deliver:</p>
     <ul>
       <li><strong>Lower rates</strong> - Municipal utilities charge 15% less on average than private utilities</li>
       <li><strong>Better reliability</strong> - Public utilities average 59 minutes of downtime per year, compared to 133 minutes for private utilities</li>

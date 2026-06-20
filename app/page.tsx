@@ -84,8 +84,7 @@ export default async function Home() {
             </p>
             <p>
               Public utility customers experience an average of 59 minutes of downtime per
-              year, compared to 133 minutes for private utility customers. That&apos;s real
-              reliability you can count on.
+              year, compared to 133 minutes for private utility customers.
             </p>
           </ContentSection>
         </AnimateOnScroll>
