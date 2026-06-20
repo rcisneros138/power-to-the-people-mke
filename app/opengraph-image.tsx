@@ -16,7 +16,7 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           background: "#FFB966",
           color: "#133020",
-          padding: "80px",
+          padding: "64px",
           fontFamily: "Georgia, serif",
         }}
       >
@@ -38,12 +38,11 @@ export default function OpenGraphImage() {
             flexDirection: "column",
             flex: 1,
             justifyContent: "center",
-            marginTop: -40,
           }}
         >
           <div
             style={{
-              fontSize: 180,
+              fontSize: 150,
               fontWeight: 900,
               lineHeight: 0.9,
               letterSpacing: "-0.04em",
@@ -65,7 +64,7 @@ export default function OpenGraphImage() {
           </div>
           <div
             style={{
-              fontSize: 180,
+              fontSize: 150,
               fontWeight: 900,
               lineHeight: 0.9,
               letterSpacing: "-0.04em",
