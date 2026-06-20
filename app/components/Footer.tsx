@@ -70,9 +70,22 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-white/70 text-sm">
-            &copy; {new Date().getFullYear()} Power to the People Milwaukee. All rights reserved.
-          </p>
+          <div className="text-white/70 text-sm space-y-1">
+            <p>
+              &copy; {new Date().getFullYear()} Power to the People Milwaukee. All rights reserved.
+            </p>
+            <p className="text-white/50 text-xs">
+              Designed &amp; Built by{" "}
+              <a
+                href="https://raymondc.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-coral transition-colors"
+              >
+                Raymond C.
+              </a>
+            </p>
+          </div>
           <div className="flex gap-4">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-3 -m-3 text-white/70 hover:text-white transition-colors" aria-label="Twitter (opens in new tab)">
               <svg aria-hidden="true" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
