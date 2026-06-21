@@ -72,15 +72,14 @@ export default async function Home() {
 
         <AnimateOnScroll animation="fade-up">
           <ContentSection
-            label="It Works"
-            title="Public Power Delivers Results"
+            label="The Proof"
+            title="Public Power Works"
             imagePosition="left"
             media={<OutageClocks />}
           >
             <p>
               Nationally, 1 in 7 Americans are served by public utilities. In Wisconsin,
-              81 publicly owned utilities serve 11% of the state&apos;s electricity needs—with
-              better outcomes than private alternatives.
+              81 publicly owned utilities serve 11% of the state&apos;s electricity needs.
             </p>
             <p>
               Public utility customers experience an average of 59 minutes of downtime per
