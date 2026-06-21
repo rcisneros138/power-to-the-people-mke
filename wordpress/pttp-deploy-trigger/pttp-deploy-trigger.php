@@ -59,7 +59,7 @@ function pttp_deploy_trigger_get_event_type() {
 }
 
 function pttp_deploy_trigger_get_post_types() {
-    $defaults = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq' ];
+    $defaults = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
     $stored   = get_option( 'pttp_deploy_trigger_post_types', $defaults );
     if ( ! is_array( $stored ) || empty( $stored ) ) {
         $stored = $defaults;
@@ -216,7 +216,7 @@ function pttp_deploy_trigger_render_settings_page() {
     $tracked          = pttp_deploy_trigger_get_post_types();
     $last             = get_option( 'pttp_deploy_trigger_last' );
     $scheduled        = wp_next_scheduled( PTTP_DEPLOY_TRIGGER_CRON_HOOK );
-    $all_post_types   = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq' ];
+    $all_post_types   = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
     ?>
     <div class="wrap">
         <h1>Deploy Trigger</h1>
@@ -373,7 +373,7 @@ function pttp_deploy_trigger_handle_save() {
         }
     }
 
-    $allowed_types = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq' ];
+    $allowed_types = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
     $submitted     = isset( $_POST['pttp_post_types'] ) && is_array( $_POST['pttp_post_types'] )
         ? array_map( 'sanitize_text_field', wp_unslash( $_POST['pttp_post_types'] ) )
         : [];

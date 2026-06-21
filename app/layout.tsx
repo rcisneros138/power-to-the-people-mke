@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Source_Sans_3, Bebas_Neue, Spectral } from "next/font/google";
 import localFont from "next/font/local";
+import { AnnouncementBar } from "./components";
+import { getActiveAnnouncement } from "./lib/wordpress";
 import "./globals.css";
 
 const SITE_URL = "https://powertothepeoplemke.org";
@@ -131,11 +133,13 @@ const websiteJsonLd = {
   inLanguage: "en-US",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const announcement = await getActiveAnnouncement();
+
   return (
     <html lang="en">
       <body className={`${sourceSans3.variable} ${bebasNeue.variable} ${spectral.variable} ${talina.variable} ${creamCake.variable} font-sans antialiased`}>
@@ -145,6 +149,7 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <AnnouncementBar announcement={announcement} />
         {children}
         <Script
           id="schema-organization"

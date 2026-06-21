@@ -12,6 +12,7 @@ export { default as PartnersStrip } from "./PartnersStrip";
 export { default as FAQ } from "./FAQ";
 export { default as MobileMenu } from "./MobileMenu";
 export { default as NavLink } from "./NavLink";
+export { default as AnnouncementBar } from "./AnnouncementBar";
 
 // Re-export types
 export type { FAQItem } from "./FAQ";

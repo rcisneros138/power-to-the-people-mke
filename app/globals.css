@@ -8,6 +8,8 @@
   --color-navy-dark: #0D1F15;
   --color-teal: #FFB966;
   --color-teal-dark: #E5A55C;
+  --color-urgent: #C8102E;
+  --color-urgent-dark: #A50D26;
 
   --font-family-sans: var(--font-sans), 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
   --font-family-display: var(--font-display), 'Bebas Neue', Impact, sans-serif;

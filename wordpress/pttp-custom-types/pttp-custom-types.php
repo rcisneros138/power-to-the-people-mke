@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: PTTP Custom Post Types
- * Description: Registers Events, Partners, and FAQs custom post types with WPGraphQL support for Power to the People MKE.
- * Version: 1.1.0
+ * Description: Registers Events, Partners, FAQs, and Announcements custom post types with WPGraphQL support for Power to the People MKE.
+ * Version: 1.2.0
  * Author: Power to the People MKE
  * Text Domain: pttp
  * Requires at least: 6.0
@@ -105,6 +105,35 @@ function pttp_register_post_types() {
         'graphql_single_name' => 'faq',
         'graphql_plural_name' => 'faqs',
     ] );
+
+    // Announcements — drive the site-wide banner. No WP front-end pages; queried via GraphQL.
+    register_post_type( 'pttp_announcement', [
+        'labels' => [
+            'name'               => 'Announcements',
+            'singular_name'      => 'Announcement',
+            'all_items'          => 'All Announcements',
+            'add_new_item'       => 'Add New Announcement',
+            'edit_item'          => 'Edit Announcement',
+            'new_item'           => 'New Announcement',
+            'view_item'          => 'View Announcement',
+            'search_items'       => 'Search Announcements',
+            'not_found'          => 'No announcements found',
+            'not_found_in_trash' => 'No announcements found in Trash',
+            'menu_name'          => 'Announcements',
+        ],
+        'public'              => false,
+        'publicly_queryable'  => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'has_archive'         => false,
+        'menu_icon'           => 'dashicons-megaphone',
+        'menu_position'       => 28,
+        'supports'            => [ 'title' ],
+        'show_in_rest'        => true,
+        'show_in_graphql'     => true,
+        'graphql_single_name' => 'announcement',
+        'graphql_plural_name' => 'announcements',
+    ] );
 }
 
 // ──────────────────────────────────────────────
@@ -143,6 +172,16 @@ function pttp_add_meta_boxes() {
         'pttp_faq',
         'side',
         'default'
+    );
+
+    // Announcement fields: message, button, urgency, schedule, dismissible
+    add_meta_box(
+        'pttp_announcement_details',
+        'Announcement',
+        'pttp_announcement_meta_box_html',
+        'pttp_announcement',
+        'normal',
+        'high'
     );
 }
 
@@ -208,6 +247,83 @@ function pttp_faq_meta_box_html( $post ) {
         <label for="pttp_faq_order"><strong>Display Order</strong></label><br />
         <input type="number" id="pttp_faq_order" name="pttp_faq_order" value="<?php echo esc_attr( $display_order ); ?>" class="small-text" min="0" />
     </p>
+    <?php
+}
+
+function pttp_announcement_meta_box_html( $post ) {
+    wp_nonce_field( 'pttp_announcement_nonce', 'pttp_announcement_nonce_field' );
+
+    $message      = get_post_meta( $post->ID, '_pttp_ann_message', true );
+    $button_label = get_post_meta( $post->ID, '_pttp_ann_button_label', true );
+    $button_url   = get_post_meta( $post->ID, '_pttp_ann_button_url', true );
+    $urgency      = get_post_meta( $post->ID, '_pttp_ann_urgency', true ) ?: 'info';
+    $show_from    = get_post_meta( $post->ID, '_pttp_ann_show_from', true );
+    $show_until   = get_post_meta( $post->ID, '_pttp_ann_show_until', true );
+    $dismissible  = get_post_meta( $post->ID, '_pttp_ann_dismissible', true );
+
+    $urgencies = [
+        'info'   => 'Info (calm — navy)',
+        'event'  => 'Event (attention — coral)',
+        'urgent' => 'Urgent (alert — red)',
+    ];
+    ?>
+    <p style="color:#646970;margin-top:0;">
+        The title above is an internal label only — visitors never see it. The site shows the
+        <strong>most recently published</strong> announcement. To take the banner down, move this to Draft or Trash.
+    </p>
+    <table class="form-table">
+        <tr>
+            <th><label for="pttp_ann_message">Message</label></th>
+            <td>
+                <textarea id="pttp_ann_message" name="pttp_ann_message" rows="2" class="large-text" placeholder="e.g. City Council vote Tuesday 6pm — pack the room!"><?php echo esc_textarea( $message ); ?></textarea>
+                <p class="description">The text visitors see in the banner.</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="pttp_ann_button_label">Button label</label></th>
+            <td>
+                <input type="text" id="pttp_ann_button_label" name="pttp_ann_button_label" value="<?php echo esc_attr( $button_label ); ?>" class="regular-text" placeholder="e.g. RSVP" />
+                <p class="description">Optional. The button only appears if both label and URL are filled in.</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="pttp_ann_button_url">Button URL</label></th>
+            <td><input type="url" id="pttp_ann_button_url" name="pttp_ann_button_url" value="<?php echo esc_url( $button_url ); ?>" class="large-text" placeholder="https://… or /calendar" /></td>
+        </tr>
+        <tr>
+            <th><label for="pttp_ann_urgency">Urgency / color</label></th>
+            <td>
+                <select id="pttp_ann_urgency" name="pttp_ann_urgency">
+                    <?php foreach ( $urgencies as $value => $label ) : ?>
+                        <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $urgency, $value ); ?>><?php echo esc_html( $label ); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="pttp_ann_show_from">Show from</label></th>
+            <td>
+                <input type="datetime-local" id="pttp_ann_show_from" name="pttp_ann_show_from" value="<?php echo esc_attr( $show_from ); ?>" />
+                <p class="description">Optional. Banner stays hidden until this time. Leave blank to show immediately.</p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="pttp_ann_show_until">Show until</label></th>
+            <td>
+                <input type="datetime-local" id="pttp_ann_show_until" name="pttp_ann_show_until" value="<?php echo esc_attr( $show_until ); ?>" />
+                <p class="description">Optional. Banner auto-hides after this time — no rebuild needed. Leave blank to show until you unpublish it.</p>
+            </td>
+        </tr>
+        <tr>
+            <th>Dismissible</th>
+            <td>
+                <label>
+                    <input type="checkbox" id="pttp_ann_dismissible" name="pttp_ann_dismissible" value="1" <?php checked( $dismissible, '1' ); ?> />
+                    Let visitors close the banner (it stays closed for them until you change the message).
+                </label>
+            </td>
+        </tr>
+    </table>
     <?php
 }
 
@@ -284,6 +400,42 @@ function pttp_save_faq_meta( $post_id ) {
     }
 }
 
+add_action( 'save_post_pttp_announcement', 'pttp_save_announcement_meta' );
+
+function pttp_save_announcement_meta( $post_id ) {
+    if ( ! isset( $_POST['pttp_announcement_nonce_field'] ) || ! wp_verify_nonce( $_POST['pttp_announcement_nonce_field'], 'pttp_announcement_nonce' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    if ( isset( $_POST['pttp_ann_message'] ) ) {
+        update_post_meta( $post_id, '_pttp_ann_message', sanitize_textarea_field( $_POST['pttp_ann_message'] ) );
+    }
+    if ( isset( $_POST['pttp_ann_button_label'] ) ) {
+        update_post_meta( $post_id, '_pttp_ann_button_label', sanitize_text_field( $_POST['pttp_ann_button_label'] ) );
+    }
+    if ( isset( $_POST['pttp_ann_button_url'] ) ) {
+        update_post_meta( $post_id, '_pttp_ann_button_url', esc_url_raw( $_POST['pttp_ann_button_url'] ) );
+    }
+    if ( isset( $_POST['pttp_ann_urgency'] ) ) {
+        $urgency = in_array( $_POST['pttp_ann_urgency'], [ 'info', 'event', 'urgent' ], true ) ? $_POST['pttp_ann_urgency'] : 'info';
+        update_post_meta( $post_id, '_pttp_ann_urgency', $urgency );
+    }
+    // datetime-local values look like "2026-06-21T18:00"; store as-is after a light sanitize.
+    if ( isset( $_POST['pttp_ann_show_from'] ) ) {
+        update_post_meta( $post_id, '_pttp_ann_show_from', sanitize_text_field( $_POST['pttp_ann_show_from'] ) );
+    }
+    if ( isset( $_POST['pttp_ann_show_until'] ) ) {
+        update_post_meta( $post_id, '_pttp_ann_show_until', sanitize_text_field( $_POST['pttp_ann_show_until'] ) );
+    }
+    update_post_meta( $post_id, '_pttp_ann_dismissible', isset( $_POST['pttp_ann_dismissible'] ) ? '1' : '' );
+}
+
 // ──────────────────────────────────────────────
 // 4. Register Meta in REST API (for Gutenberg)
 // ──────────────────────────────────────────────
@@ -344,6 +496,25 @@ function pttp_register_meta_fields() {
         'type'              => 'integer',
         'sanitize_callback' => 'absint',
     ] );
+
+    // Announcement meta
+    $ann_string_fields = [
+        '_pttp_ann_message'      => 'sanitize_textarea_field',
+        '_pttp_ann_button_label' => 'sanitize_text_field',
+        '_pttp_ann_button_url'   => 'esc_url_raw',
+        '_pttp_ann_urgency'      => 'sanitize_text_field',
+        '_pttp_ann_show_from'    => 'sanitize_text_field',
+        '_pttp_ann_show_until'   => 'sanitize_text_field',
+        '_pttp_ann_dismissible'  => 'sanitize_text_field',
+    ];
+    foreach ( $ann_string_fields as $key => $sanitizer ) {
+        register_post_meta( 'pttp_announcement', $key, [
+            'show_in_rest'      => true,
+            'single'            => true,
+            'type'              => 'string',
+            'sanitize_callback' => $sanitizer,
+        ] );
+    }
 }
 
 // ──────────────────────────────────────────────
@@ -410,6 +581,37 @@ function pttp_register_graphql_fields() {
         'resolve'     => function( $post ) {
             $order = get_post_meta( $post->databaseId, '_pttp_faq_order', true );
             return $order !== '' ? intval( $order ) : 0;
+        },
+    ] );
+
+    // -- Announcement custom fields --
+    register_graphql_object_type( 'AnnouncementFields', [
+        'description' => 'Custom fields for the site announcement banner',
+        'fields'      => [
+            'message'     => [ 'type' => 'String',  'description' => 'Banner text shown to visitors' ],
+            'buttonLabel' => [ 'type' => 'String',  'description' => 'Optional button label' ],
+            'buttonUrl'   => [ 'type' => 'String',  'description' => 'Optional button URL' ],
+            'urgency'     => [ 'type' => 'String',  'description' => 'info | event | urgent (drives color)' ],
+            'showFrom'    => [ 'type' => 'String',  'description' => 'Show from datetime (local, ISO-ish), or null' ],
+            'showUntil'   => [ 'type' => 'String',  'description' => 'Show until datetime (local, ISO-ish), or null' ],
+            'dismissible' => [ 'type' => 'Boolean', 'description' => 'Whether visitors can close the banner' ],
+        ],
+    ] );
+
+    register_graphql_field( 'Announcement', 'announcementFields', [
+        'type'        => 'AnnouncementFields',
+        'description' => 'Announcement banner custom fields',
+        'resolve'     => function( $post ) {
+            $id = $post->databaseId;
+            return [
+                'message'     => get_post_meta( $id, '_pttp_ann_message', true ) ?: null,
+                'buttonLabel' => get_post_meta( $id, '_pttp_ann_button_label', true ) ?: null,
+                'buttonUrl'   => get_post_meta( $id, '_pttp_ann_button_url', true ) ?: null,
+                'urgency'     => get_post_meta( $id, '_pttp_ann_urgency', true ) ?: 'info',
+                'showFrom'    => get_post_meta( $id, '_pttp_ann_show_from', true ) ?: null,
+                'showUntil'   => get_post_meta( $id, '_pttp_ann_show_until', true ) ?: null,
+                'dismissible' => get_post_meta( $id, '_pttp_ann_dismissible', true ) === '1',
+            ];
         },
     ] );
 }
@@ -491,6 +693,42 @@ add_action( 'manage_pttp_faq_posts_custom_column', 'pttp_faq_column_content', 10
 function pttp_faq_column_content( $column, $post_id ) {
     if ( $column === 'faq_order' ) {
         echo esc_html( get_post_meta( $post_id, '_pttp_faq_order', true ) ?: '0' );
+    }
+}
+
+// -- Announcement columns --
+add_filter( 'manage_pttp_announcement_posts_columns', 'pttp_announcement_columns' );
+
+function pttp_announcement_columns( $columns ) {
+    $new = [];
+    foreach ( $columns as $key => $label ) {
+        $new[ $key ] = $label;
+        if ( $key === 'title' ) {
+            $new['ann_message'] = 'Message';
+            $new['ann_urgency'] = 'Urgency';
+            $new['ann_window']  = 'Window';
+        }
+    }
+    return $new;
+}
+
+add_action( 'manage_pttp_announcement_posts_custom_column', 'pttp_announcement_column_content', 10, 2 );
+
+function pttp_announcement_column_content( $column, $post_id ) {
+    if ( $column === 'ann_message' ) {
+        echo esc_html( wp_trim_words( get_post_meta( $post_id, '_pttp_ann_message', true ), 12, '…' ) ?: '—' );
+    }
+    if ( $column === 'ann_urgency' ) {
+        echo esc_html( ucfirst( get_post_meta( $post_id, '_pttp_ann_urgency', true ) ?: 'info' ) );
+    }
+    if ( $column === 'ann_window' ) {
+        $from  = get_post_meta( $post_id, '_pttp_ann_show_from', true );
+        $until = get_post_meta( $post_id, '_pttp_ann_show_until', true );
+        if ( ! $from && ! $until ) {
+            echo 'Always';
+        } else {
+            echo esc_html( ( $from ?: 'now' ) . ' → ' . ( $until ?: 'forever' ) );
+        }
     }
 }
 

@@ -1,4 +1,7 @@
 import { GraphQLClient, gql } from "graphql-request";
+import { contentHash, type AnnouncementUrgency, type WPAnnouncement } from "./announcement";
+
+export type { WPAnnouncement, AnnouncementUrgency } from "./announcement";
 
 // WordPress GraphQL endpoint
 const endpoint = process.env.WORDPRESS_GRAPHQL_URL || "";
@@ -399,5 +402,90 @@ export async function getEvents(first = 10): Promise<WPEvent[]> {
   } catch (error) {
     console.error("Error fetching events:", error);
     return [];
+  }
+}
+
+// Announcement banner ─────────────────────────────────────────────────────────
+
+const GET_ACTIVE_ANNOUNCEMENT = gql`
+  query GetActiveAnnouncement {
+    announcements(first: 1) {
+      nodes {
+        databaseId
+        announcementFields {
+          message
+          buttonLabel
+          buttonUrl
+          urgency
+          showFrom
+          showUntil
+          dismissible
+        }
+      }
+    }
+  }
+`;
+
+interface AnnouncementsResponse {
+  announcements: {
+    nodes: {
+      databaseId: number;
+      announcementFields: {
+        message: string | null;
+        buttonLabel: string | null;
+        buttonUrl: string | null;
+        urgency: string | null;
+        showFrom: string | null;
+        showUntil: string | null;
+        dismissible: boolean | null;
+      } | null;
+    }[];
+  };
+}
+
+const URGENCY_VALUES: AnnouncementUrgency[] = ["info", "event", "urgent"];
+
+/**
+ * Fetch the most recently published announcement, or null if there is none.
+ * The time window (showFrom/showUntil) is evaluated client-side, not here — see
+ * app/lib/announcement.ts — so a scheduled or expired banner needs no rebuild.
+ */
+export async function getActiveAnnouncement(): Promise<WPAnnouncement | null> {
+  if (!endpoint) {
+    return null;
+  }
+
+  try {
+    const data = await client.request<AnnouncementsResponse>(GET_ACTIVE_ANNOUNCEMENT);
+    const node = data.announcements.nodes[0];
+    const fields = node?.announcementFields;
+    if (!fields?.message) {
+      return null;
+    }
+
+    const urgency: AnnouncementUrgency = URGENCY_VALUES.includes(
+      fields.urgency as AnnouncementUrgency
+    )
+      ? (fields.urgency as AnnouncementUrgency)
+      : "info";
+
+    const message = decodeHtmlEntities(fields.message).trim();
+    const buttonLabel = fields.buttonLabel?.trim() || null;
+    const buttonUrl = fields.buttonUrl?.trim() || null;
+
+    return {
+      id: String(node.databaseId),
+      message,
+      buttonLabel,
+      buttonUrl,
+      urgency,
+      showFrom: fields.showFrom || null,
+      showUntil: fields.showUntil || null,
+      dismissible: Boolean(fields.dismissible),
+      contentHash: contentHash([message, buttonLabel, buttonUrl, urgency]),
+    };
+  } catch (error) {
+    console.error("Error fetching announcement:", error);
+    return null;
   }
 }
