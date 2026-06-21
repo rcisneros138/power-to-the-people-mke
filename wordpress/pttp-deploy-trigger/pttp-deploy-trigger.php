@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: PTTP Deploy Trigger
- * Description: Triggers a GitHub Actions repository_dispatch (event type: wordpress_update) whenever a post transitions to or from "publish" so the static Next.js site rebuilds automatically.
- * Version: 1.0.0
+ * Description: Triggers a GitHub Actions repository_dispatch (event type: wordpress_update) whenever a post transitions to or from "publish" so the static Next.js site rebuilds automatically. Self-heals newly-added post types onto sites that already saved their settings.
+ * Version: 1.1.0
  * Author: Power to the People MKE
  * Text Domain: pttp-deploy-trigger
  * Requires at least: 6.0
@@ -58,8 +58,19 @@ function pttp_deploy_trigger_get_event_type() {
     return $event ?: 'wordpress_update';
 }
 
+/**
+ * The canonical set of post types this plugin can rebuild on.
+ * Single source of truth — referenced by the tracked-types getter, the settings
+ * checkboxes, the save-handler whitelist, and the self-heal migration. Add a new
+ * CPT slug here in one place and it flows everywhere (and self-heals onto sites
+ * that already saved their settings — see pttp_deploy_trigger_sync_tracked_defaults()).
+ */
+function pttp_deploy_trigger_default_post_types() {
+    return [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
+}
+
 function pttp_deploy_trigger_get_post_types() {
-    $defaults = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
+    $defaults = pttp_deploy_trigger_default_post_types();
     $stored   = get_option( 'pttp_deploy_trigger_post_types', $defaults );
     if ( ! is_array( $stored ) || empty( $stored ) ) {
         $stored = $defaults;
@@ -70,6 +81,47 @@ function pttp_deploy_trigger_get_post_types() {
      * @param string[] $post_types Array of post type slugs.
      */
     return (array) apply_filters( 'pttp_deploy_trigger_post_types', $stored );
+}
+
+/**
+ * Self-heal: when a new post type is added to the default set, add it to a site's
+ * SAVED tracked-types option so publishing it rebuilds — without the editor having
+ * to re-tick a box. Crucially, it only adds types that are NEW since this site last
+ * saw the defaults, so a type an editor deliberately unchecked is never re-added.
+ *
+ * Runs cheaply on admin_init; it's idempotent and only writes when something changed.
+ */
+add_action( 'admin_init', 'pttp_deploy_trigger_sync_tracked_defaults' );
+
+function pttp_deploy_trigger_sync_tracked_defaults() {
+    $current_defaults = pttp_deploy_trigger_default_post_types();
+
+    // The default set as it stood before self-heal existed. Used only as the seed on
+    // a site's first run of this version, so anything added later counts as "new".
+    $baseline_known = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq' ];
+
+    $known = get_option( 'pttp_deploy_trigger_known_defaults', $baseline_known );
+    if ( ! is_array( $known ) || empty( $known ) ) {
+        $known = $baseline_known;
+    }
+
+    // Types added to the defaults since this site last recorded them.
+    $newly_added = array_values( array_diff( $current_defaults, $known ) );
+
+    // Only migrate the SAVED selection — if the editor never saved settings, the
+    // option is absent and the defaults (which already include the new type) apply.
+    $stored = get_option( 'pttp_deploy_trigger_post_types', null );
+    if ( $newly_added && is_array( $stored ) ) {
+        $merged = array_values( array_unique( array_merge( $stored, $newly_added ) ) );
+        if ( $merged !== $stored ) {
+            update_option( 'pttp_deploy_trigger_post_types', $merged, false );
+        }
+    }
+
+    // Record the defaults this site now knows about, so each new type is added once.
+    if ( $known !== $current_defaults ) {
+        update_option( 'pttp_deploy_trigger_known_defaults', $current_defaults, false );
+    }
 }
 
 // ──────────────────────────────────────────────
@@ -216,7 +268,7 @@ function pttp_deploy_trigger_render_settings_page() {
     $tracked          = pttp_deploy_trigger_get_post_types();
     $last             = get_option( 'pttp_deploy_trigger_last' );
     $scheduled        = wp_next_scheduled( PTTP_DEPLOY_TRIGGER_CRON_HOOK );
-    $all_post_types   = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
+    $all_post_types   = pttp_deploy_trigger_default_post_types();
     ?>
     <div class="wrap">
         <h1>Deploy Trigger</h1>
@@ -373,7 +425,7 @@ function pttp_deploy_trigger_handle_save() {
         }
     }
 
-    $allowed_types = [ 'post', 'page', 'pttp_event', 'pttp_partner', 'pttp_faq', 'pttp_announcement' ];
+    $allowed_types = pttp_deploy_trigger_default_post_types();
     $submitted     = isset( $_POST['pttp_post_types'] ) && is_array( $_POST['pttp_post_types'] )
         ? array_map( 'sanitize_text_field', wp_unslash( $_POST['pttp_post_types'] ) )
         : [];
