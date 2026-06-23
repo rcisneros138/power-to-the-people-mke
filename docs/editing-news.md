@@ -4,6 +4,8 @@ The **News & Updates** section at [powertothepeoplemke.org/news](https://powerto
 
 You do **not** need to ask a developer to add a post.
 
+> **⚠️ Heads-up while News is empty (current state).** Because there are no posts yet, the **News** link has been removed from the site's top navigation and the `/news` page is hidden from search engines (`noindex`). Most of this clears itself the moment you publish: your first post goes live at `/news/<slug>` and the section becomes search-visible automatically. **The one exception:** the "News" item won't reappear in the navigation menu on its own — a developer has to add it back. **So if you're launching the News section, give a developer a heads-up to restore the menu link.**
+
 ---
 
 ## What you can publish

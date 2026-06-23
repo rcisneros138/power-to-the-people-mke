@@ -6,6 +6,21 @@ For the deeper how-to on writing news posts specifically (images, slugs, excerpt
 
 ---
 
+## What you can edit (and where it lives in the admin)
+
+You can edit these parts of the site directly in WordPress — each has its **own section in the left sidebar**. Publish or update, and the site rebuilds itself (see below).
+
+| Part of the site | Where to edit it in WordPress |
+|---|---|
+| The **announcement banner** across the top of every page | **Announcements** |
+| The **News** section — the index at `/news` and each article | **Posts** |
+| The **FAQ** — both the homepage FAQ section *and* the standalone FAQ page (`/faq`) | **FAQs** |
+| The **Partners** — the `/partners` page *and* the logo strip on the homepage | **Partners** |
+
+*Everything else — the homepage, the page layouts and designs, the navigation menu and footer, and the Calendar (which comes from Solidarity Tech, not WordPress) — is set in code. Ask a developer to change those.*
+
+---
+
 ## The one thing to understand first: the site is *rebuilt*, not live
 
 The public site is a **static site**. WordPress is not serving your pages to visitors directly — instead, a build process periodically reads everything out of WordPress and bakes it into fast, static files that get served from Cloudflare.
@@ -34,7 +49,9 @@ Editing and publishing any of these will rebuild the site:
 | **Pages** | Standard content pages |
 | **Events** | (Custom type — see the Calendar caveat below) |
 | **Partners** | The Partners section |
-| **FAQs** | The FAQ content |
+| **FAQs** | The homepage FAQ section **and** the standalone FAQ page (`/faq`) |
+
+> **Note — News is currently hidden.** Because there are no posts yet, the **News** link has been removed from the top menu and `/news` is hidden from search engines. This clears itself when you publish — but the menu link won't reappear on its own. If you're launching the News section, see [`editing-news.md`](./editing-news.md) and give a developer a heads-up to restore the menu link.
 
 ### What counts as a "publish-related change"
 

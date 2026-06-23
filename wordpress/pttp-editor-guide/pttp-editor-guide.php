@@ -2,7 +2,7 @@
 /**
  * Plugin Name: PTTP Editor Guide
  * Description: Adds a "How publishing works" widget to the WordPress dashboard home and a full content-editor guide page. Helps non-technical editors understand that the public site is a static build that rebuilds on publish.
- * Version: 1.1.0
+ * Version: 1.3.0
  * Author: Power to the People MKE
  * Text Domain: pttp-editor-guide
  * Requires at least: 6.0
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'PTTP_EDITOR_GUIDE_VERSION', '1.0.0' );
+define( 'PTTP_EDITOR_GUIDE_VERSION', '1.3.0' );
 
 /**
  * URL of the Deploy Trigger settings page (where editors check rebuild status),
@@ -146,6 +146,19 @@ function pttp_editor_guide_render_page() {
 
         <p><em>The everyday guide for updating content on powertothepeoplemke.org. No code, no developer needed for routine updates.</em></p>
 
+        <h2>What you can edit (and where it lives in the admin)</h2>
+        <p>You can edit these parts of the site directly in WordPress — each has its <strong>own section in the left sidebar</strong>. Publish or update, and the site rebuilds itself (see below).</p>
+        <table class="widefat striped" style="max-width:640px;">
+            <thead><tr><th>Part of the site</th><th>Where to edit it</th></tr></thead>
+            <tbody>
+                <tr><td>The <strong>announcement banner</strong> across the top of every page</td><td><strong>Announcements</strong></td></tr>
+                <tr><td>The <strong>News</strong> section — the index at <code>/news</code> and each article</td><td><strong>Posts</strong></td></tr>
+                <tr><td>The <strong>FAQ</strong> — the homepage FAQ section <em>and</em> the standalone FAQ page (<code>/faq</code>)</td><td><strong>FAQs</strong></td></tr>
+                <tr><td>The <strong>Partners</strong> — the <code>/partners</code> page <em>and</em> the homepage logo strip</td><td><strong>Partners</strong></td></tr>
+            </tbody>
+        </table>
+        <p style="color:#646970;"><em>Everything else — the homepage, the page layouts and designs, the navigation menu and footer, and the Calendar (which comes from Solidarity Tech, not WordPress) — is set in code. Ask a developer to change those.</em></p>
+
         <h2>The one thing to understand: the site is <em>rebuilt</em>, not live</h2>
         <p>
             The public site is a <strong>static site</strong>. WordPress doesn't serve pages to visitors directly —
@@ -174,7 +187,7 @@ function pttp_editor_guide_render_page() {
                 <tr><td>Pages</td><td>Standard content pages</td></tr>
                 <tr><td>Events</td><td>Custom type — <em>see Calendar caveat below</em></td></tr>
                 <tr><td>Partners</td><td>Partners section</td></tr>
-                <tr><td>FAQs</td><td>FAQ content</td></tr>
+                <tr><td>FAQs</td><td>The homepage FAQ section <strong>and</strong> the standalone FAQ page (<code>/faq</code>)</td></tr>
                 <tr><td>Announcements</td><td>The banner across the top of every page</td></tr>
             </tbody>
         </table>
@@ -194,6 +207,13 @@ function pttp_editor_guide_render_page() {
         </ul>
         <p>In short: if the change affects what a visitor sees, it rebuilds. Working privately on a draft does not.</p>
         <p><strong>Rapid edits are batched.</strong> Multiple changes within ~30 seconds coalesce into a single rebuild, so finish your batch and they go out together.</p>
+
+        <div class="pttp-eg-note">
+            <strong>News is currently hidden.</strong> Because there are no posts yet, the <strong>News</strong> link has been
+            removed from the top menu and <code>/news</code> is hidden from search engines. This clears itself when you publish —
+            but the menu link won't reappear on its own. If you're launching the News section, give a developer a heads-up to
+            restore the menu link.
+        </div>
 
         <h2>How long until my change is live?</h2>
         <p>Roughly <strong>2–4 minutes</strong>: you publish → the plugin waits ~30s to batch edits → the build runs (reads WordPress, builds static files, deploys to Cloudflare) → live.</p>
