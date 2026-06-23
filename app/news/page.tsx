@@ -3,20 +3,28 @@ import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPosts } from "../lib/wordpress";
 import NewsGrid from "./NewsGrid";
 
-export const metadata: Metadata = {
-  title: "News & Campaign Updates",
-  description:
-    "Latest news, announcements, and updates from the Power to the People Milwaukee campaign for a publicly owned utility.",
-  alternates: { canonical: "/news" },
-  openGraph: {
-    url: "/news",
-    type: "website",
-    title: "News & Updates | Power to the People MKE",
+export async function generateMetadata(): Promise<Metadata> {
+  // Self-healing noindex: while there are no posts the News page is blank, so
+  // keep it out of search. As soon as a post is published it becomes
+  // indexable again automatically — no flag to remember to flip on launch.
+  const { posts } = await getPosts(20);
+
+  return {
+    title: "News & Campaign Updates",
     description:
-      "Latest news from the campaign for public power in Milwaukee.",
-    images: ["/opengraph-image"],
-  },
-};
+      "Latest news, announcements, and updates from the Power to the People Milwaukee campaign for a publicly owned utility.",
+    alternates: { canonical: "/news" },
+    robots: posts.length === 0 ? { index: false, follow: true } : undefined,
+    openGraph: {
+      url: "/news",
+      type: "website",
+      title: "News & Updates | Power to the People MKE",
+      description:
+        "Latest news from the campaign for public power in Milwaukee.",
+      images: ["/opengraph-image"],
+    },
+  };
+}
 
 export default async function NewsPage() {
   const { posts } = await getPosts(20);
