@@ -28,7 +28,7 @@ const defaultResources: Resource[] = [
     title: "Public Power FAQ",
     description: "Answers to the most common questions about creating a municipal utility in Milwaukee.",
     type: "doc",
-    href: "/about",
+    href: "/faq",
   },
   {
     title: "Wisconsin Chapter 197",
@@ -37,28 +37,10 @@ const defaultResources: Resource[] = [
     href: "https://docs.legis.wisconsin.gov/statutes/statutes/197",
   },
   {
-    title: "APPA Public Power Statistics",
-    description: "National data from the American Public Power Association on municipal utility performance.",
-    type: "link",
-    href: "https://www.publicpower.org/",
-  },
-  {
-    title: "We Energies Rate Comparison",
-    description: "How We Energies rates compare to Wisconsin's publicly owned utilities. (Coming soon)",
-    type: "doc",
-    href: "/resources",
-  },
-  {
-    title: "Municipal Utility Case Studies",
-    description: "Success stories from Austin, Memphis, Los Angeles, and Wisconsin communities. (Coming soon)",
-    type: "doc",
-    href: "/resources",
-  },
-  {
     title: "Campaign White Paper",
-    description: "Our detailed proposal for transitioning Milwaukee to public power. (Coming soon)",
+    description: "Our detailed proposal for transitioning Milwaukee to public power.",
     type: "pdf",
-    href: "/resources",
+    href: "https://drive.google.com/file/d/1MKrKsyE5tGC3iIMK1Fco94XRDPfWgkBF/view?usp=sharing",
   },
 ];
 
@@ -101,12 +83,14 @@ export default async function ResourcesPage() {
 
           {/* Resource cards grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {defaultResources.map((resource, index) => (
+            {defaultResources.map((resource, index) => {
+              const isExternal = resource.href.startsWith("http");
+              return (
               <AnimateOnScroll key={resource.title} animation="fade-up" delay={index * 80}>
               <a
                 href={resource.href}
-                target={resource.type === "link" ? "_blank" : undefined}
-                rel={resource.type === "link" ? "noopener noreferrer" : undefined}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
                 className="group block bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-navy/5 hover:border-coral/20"
               >
                 <div className="text-coral mb-4 group-hover:scale-110 transition-transform duration-200 inline-block">
@@ -120,14 +104,15 @@ export default async function ResourcesPage() {
                 </p>
                 <span className="mt-4 inline-flex items-center text-navy text-sm font-bold group-hover:text-coral uppercase tracking-wide">
                   {resource.type === "link" ? "Visit" : resource.type === "pdf" ? "Download" : "Read"}
-                  {resource.type === "link" && <span className="sr-only"> (opens in new tab)</span>}
+                  {isExternal && <span className="sr-only"> (opens in new tab)</span>}
                   <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
                   </svg>
                 </span>
               </a>
               </AnimateOnScroll>
-            ))}
+              );
+            })}
           </div>
         </div>
 

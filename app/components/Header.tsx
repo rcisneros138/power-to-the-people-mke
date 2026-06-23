@@ -6,7 +6,6 @@ import NavLink from "./NavLink";
 const navLinks = [
   { href: "/about", label: "About" },
   { href: "/resources", label: "Resources" },
-  { href: "/news", label: "News" },
   { href: "/calendar", label: "Calendar" },
   { href: "/partners", label: "Partners" },
   { href: "/get-involved", label: "Get Involved" },
