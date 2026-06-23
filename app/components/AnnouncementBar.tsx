@@ -7,7 +7,7 @@ const STORAGE_KEY = "pttp-dismissed-announcement";
 
 const URGENCY_CLASSES: Record<AnnouncementUrgency, string> = {
   info: "bg-navy text-cream",
-  event: "bg-coral text-navy",
+  event: "bg-coral text-white",
   urgent: "bg-urgent text-white",
 };
 
@@ -69,7 +69,7 @@ export default function AnnouncementBar({
       aria-label="Site announcement"
       className={`${colorClass} relative w-full`}
     >
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-1.5 px-4 py-2.5 pr-10 text-center text-sm font-medium sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-1.5 px-4 py-3 pr-10 text-center text-base font-semibold sm:px-6 lg:px-8 sm:text-lg">
         <p className="m-0">{announcement.message}</p>
 
         {hasButton && (
@@ -78,7 +78,7 @@ export default function AnnouncementBar({
             {...(isExternal
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
-            className="inline-flex items-center gap-1 rounded-full bg-white/20 px-4 py-1 font-bold uppercase tracking-wider transition-colors hover:bg-white/30"
+            className="inline-flex items-center gap-1 rounded-full bg-white/25 px-4 py-1.5 text-sm font-bold uppercase tracking-wider transition-colors hover:bg-white/40"
           >
             {announcement.buttonLabel}
           </a>
