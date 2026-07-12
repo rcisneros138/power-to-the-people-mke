@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const dynamic = "force-static";
@@ -5,7 +7,12 @@ export const alt = "Power to the People Milwaukee — A campaign for a publicly 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const [talina, creamCake] = await Promise.all([
+    readFile(join(process.cwd(), "app/fonts/Talina.otf")),
+    readFile(join(process.cwd(), "app/fonts/CreamCakeBold.otf")),
+  ]);
+
   return new ImageResponse(
     (
       <div
@@ -14,102 +21,77 @@ export default function OpenGraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           background: "#FFB966",
           color: "#133020",
-          padding: "64px",
-          fontFamily: "Georgia, serif",
+          padding: "48px 64px",
         }}
       >
         <div
           style={{
-            fontSize: 28,
-            fontWeight: 700,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            opacity: 0.8,
+            fontFamily: "Talina",
+            fontSize: 148,
+            lineHeight: 0.85,
+            letterSpacing: "-0.02em",
+            textShadow: "7px 7px 0 #FF4715",
           }}
         >
-          A Milwaukee DSA Campaign
+          POWER
         </div>
-
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            justifyContent: "center",
+            fontFamily: "Talina",
+            fontSize: 44,
+            letterSpacing: "0.05em",
+            margin: "18px 0",
           }}
         >
-          <div
-            style={{
-              fontSize: 150,
-              fontWeight: 900,
-              lineHeight: 0.9,
-              letterSpacing: "-0.04em",
-              textTransform: "uppercase",
-            }}
-          >
-            Power
-          </div>
-          <div
-            style={{
-              fontSize: 44,
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-              margin: "8px 0",
-            }}
-          >
-            to the
-          </div>
-          <div
-            style={{
-              fontSize: 150,
-              fontWeight: 900,
-              lineHeight: 0.9,
-              letterSpacing: "-0.04em",
-              textTransform: "uppercase",
-            }}
-          >
-            People
-          </div>
+          TO THE
         </div>
-
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginTop: 24,
+            fontFamily: "Talina",
+            fontSize: 148,
+            lineHeight: 0.85,
+            letterSpacing: "-0.02em",
+            textShadow: "7px 7px 0 #FF4715",
           }}
         >
-          <div
-            style={{
-              fontSize: 32,
-              fontWeight: 700,
-              maxWidth: 760,
-              lineHeight: 1.2,
-            }}
-          >
-            Replace We Energies with a publicly owned utility.
-          </div>
-          <div
-            style={{
-              fontSize: 24,
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-              padding: "12px 24px",
-              background: "#133020",
-              color: "#F5EBD6",
-              borderRadius: 999,
-            }}
-          >
-            powertothepeoplemke.org
-          </div>
+          PEOPLE
+        </div>
+        <div
+          style={{
+            fontFamily: "CreamCake",
+            fontSize: 38,
+            marginTop: 36,
+            opacity: 0.85,
+          }}
+        >
+          A Milwaukee Democratic Socialists of America Campaign
+        </div>
+        <div
+          style={{
+            fontSize: 26,
+            fontFamily: "Talina",
+            letterSpacing: "0.08em",
+            padding: "14px 36px",
+            marginTop: 36,
+            background: "#FF4715",
+            color: "#FFFFFF",
+            borderRadius: 999,
+          }}
+        >
+          POWERTOTHEPEOPLEMKE.ORG
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        { name: "Talina", data: talina, weight: 400, style: "normal" },
+        { name: "CreamCake", data: creamCake, weight: 700, style: "normal" },
+      ],
+    },
   );
 }
