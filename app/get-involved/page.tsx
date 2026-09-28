@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import Script from "next/script";
 import { AnimateOnScroll, Header, Footer } from "../components";
 import { getPage } from "../lib/wordpress";
+import { PETITION_URL } from "../lib/links";
 
-const PETITION_URL = "https://actionnetwork.org/petitions/power-to-the-people";
 const CONTACT_REPS_URL =
   "https://dsamke.solidarity.tech/power-to-the-people-alder-email-mobilization";
 
@@ -17,6 +17,16 @@ const SOLIDARITY_TECH_FORM_URL =
   "https://dsamke.solidarity.tech/power-to-the-people-interest-form/embed?breakout=true";
 const SOLIDARITY_TECH_FORM_PUBLIC_URL =
   "https://dsamke.solidarity.tech/power-to-the-people-interest-form";
+
+// Upcoming-events list. Same embed contract as the calendar and the interest
+// form: `<page-url>/embed` + `?breakout=true`. NOTE — as of 2026-09-28 the ST
+// `pttp-events` page has NOT had the chrome-strip + height-broadcast snippet
+// pasted into Page Settings -> Head HTML, so until that lands this iframe shows
+// ST's own nav/footer and holds the fallback min-height instead of auto-sizing.
+const SOLIDARITY_TECH_EVENTS_URL =
+  "https://dsamke.solidarity.tech/pttp-events/embed?breakout=true";
+const SOLIDARITY_TECH_EVENTS_PUBLIC_URL =
+  "https://dsamke.solidarity.tech/pttp-events";
 
 export const metadata: Metadata = {
   title: "Get Involved — Join the Public Power Campaign",
@@ -49,7 +59,7 @@ const waysToHelp: WayToHelp[] = [
     ),
     title: "Volunteer",
     description: "Join our canvassing teams, help at events, or assist with outreach. Every hour you give helps build the movement.",
-    href: "#volunteer-signup",
+    href: "#events",
   },
   {
     icon: (
@@ -161,6 +171,44 @@ export default async function GetInvolvedPage() {
           </div>
         </div>
 
+        {/* Upcoming events — embedded from Solidarity Tech */}
+        <AnimateOnScroll animation="fade-up">
+          <div id="events" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-16 scroll-mt-28">
+            <h2 className="text-3xl sm:text-4xl font-spectral font-bold text-navy text-center mb-3">
+              Upcoming Events
+            </h2>
+            <p className="text-navy/70 text-center mb-10 max-w-2xl mx-auto">
+              Canvasses, meetings, and community forums you can join. RSVP through
+              any event below and you&apos;ll get a confirmation email.
+            </p>
+
+            <div className="bg-white rounded-xl border border-navy/5 overflow-hidden shadow-sm">
+              <iframe
+                id="solidarity-events-list"
+                data-solidarity-tech="true"
+                src={SOLIDARITY_TECH_EVENTS_URL}
+                title="Power to the People MKE — upcoming events"
+                className="w-full block border-0"
+                style={{ minHeight: 600 }}
+                loading="lazy"
+              />
+            </div>
+
+            <p className="mt-4 text-center text-sm text-navy/60">
+              Having trouble viewing the list?{" "}
+              <a
+                href={SOLIDARITY_TECH_EVENTS_PUBLIC_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-coral underline hover:text-coral-dark transition-colors"
+              >
+                Open it in a new tab
+              </a>
+              .
+            </p>
+          </div>
+        </AnimateOnScroll>
+
         {/* Volunteer signup form — embedded from Solidarity Tech */}
         <AnimateOnScroll animation="fade-up">
         <div id="volunteer-signup" className="bg-navy-dark py-16 sm:py-20 scroll-mt-28">
@@ -175,6 +223,7 @@ export default async function GetInvolvedPage() {
             <div className="bg-white rounded-xl overflow-hidden shadow-sm">
               <iframe
                 id="solidarity-volunteer-form"
+                data-solidarity-tech="true"
                 src={SOLIDARITY_TECH_FORM_URL}
                 title="Power to the People MKE — volunteer interest form"
                 className="w-full block border-0"
@@ -205,19 +254,22 @@ export default async function GetInvolvedPage() {
       <Footer />
 
       {/*
-        Solidarity Tech broadcasts `postMessage` height updates from inside the
-        iframe (the height-broadcast script must be pasted into the ST form
-        page's Page Settings → Head HTML). Target by id so this stays robust
-        if another iframe is ever added to this page. +20px buffer matches
-        ST's recommended snippet.
+        Solidarity Tech broadcasts `postMessage` height updates from inside each
+        iframe (the height-broadcast script must be pasted into that ST page's
+        Page Settings → Head HTML). This page has TWO ST iframes and both send
+        the same message type, so match on `event.source` — keying off a single
+        id would resize the form to the events list's height and vice versa.
+        +20px buffer matches ST's recommended snippet.
       */}
-      <Script id="solidarity-tech-form-resize-receiver" strategy="afterInteractive">
+      <Script id="solidarity-tech-resize-receiver" strategy="afterInteractive">
         {`
           window.addEventListener('message', function(event) {
-            if (event.data && event.data.type === 'solidarity-tech-resize') {
-              var iframe = document.getElementById('solidarity-volunteer-form');
-              if (iframe) {
-                iframe.style.height = (event.data.height + 20) + 'px';
+            if (!event.data || event.data.type !== 'solidarity-tech-resize') return;
+            var frames = document.querySelectorAll('iframe[data-solidarity-tech]');
+            for (var i = 0; i < frames.length; i++) {
+              if (frames[i].contentWindow === event.source) {
+                frames[i].style.height = (event.data.height + 20) + 'px';
+                return;
               }
             }
           });

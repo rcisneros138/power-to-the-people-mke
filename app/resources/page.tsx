@@ -31,16 +31,16 @@ const defaultResources: Resource[] = [
     href: "/faq",
   },
   {
-    title: "Wisconsin Chapter 197",
-    description: "The state law that gives Milwaukee the legal right to create a publicly owned utility.",
-    type: "link",
-    href: "https://docs.legis.wisconsin.gov/statutes/statutes/197",
-  },
-  {
     title: "Campaign White Paper",
     description: "Our detailed proposal for transitioning Milwaukee to public power.",
     type: "pdf",
     href: "https://drive.google.com/file/d/1MKrKsyE5tGC3iIMK1Fco94XRDPfWgkBF/view?usp=sharing",
+  },
+  {
+    title: "Wisconsin Chapter 197",
+    description: "The state law that gives Milwaukee the legal right to create a publicly owned utility.",
+    type: "link",
+    href: "https://docs.legis.wisconsin.gov/statutes/statutes/197",
   },
 ];
 

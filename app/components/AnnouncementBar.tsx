@@ -7,7 +7,7 @@ const STORAGE_KEY = "pttp-dismissed-announcement";
 
 const URGENCY_CLASSES: Record<AnnouncementUrgency, string> = {
   info: "bg-navy text-cream",
-  event: "bg-coral text-white",
+  event: "bg-coral-deep text-white",
   urgent: "bg-urgent text-white",
 };
 
@@ -78,7 +78,7 @@ export default function AnnouncementBar({
             {...(isExternal
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
-            className="inline-flex items-center gap-1 rounded-full bg-white/25 px-4 py-1.5 text-sm font-bold uppercase tracking-wider transition-colors hover:bg-white/40"
+            className="inline-flex items-center gap-1 rounded-full bg-black/20 px-4 py-1.5 text-sm font-bold uppercase tracking-wider transition-colors hover:bg-black/30"
           >
             {announcement.buttonLabel}
           </a>
@@ -90,7 +90,7 @@ export default function AnnouncementBar({
           type="button"
           onClick={handleDismiss}
           aria-label="Dismiss announcement"
-          className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-full text-lg leading-none opacity-80 transition-opacity hover:opacity-100"
+          className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-full text-lg leading-none transition-colors hover:bg-white/20"
         >
           <span aria-hidden="true">&times;</span>
         </button>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import NavLink from "./NavLink";
+import { PETITION_URL } from "../lib/links";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -89,7 +90,7 @@ export default function MobileMenu() {
               </NavLink>
             ))}
             <a
-              href="https://actionnetwork.org/petitions/power-to-the-people"
+              href={PETITION_URL}
               target="_blank"
               rel="noopener noreferrer"
               onClick={close}

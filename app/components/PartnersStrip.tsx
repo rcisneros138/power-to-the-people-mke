@@ -40,16 +40,16 @@ export default function PartnersStrip({ partners }: PartnersStripProps) {
                   <img
                     src={partner.logo.sourceUrl}
                     alt={partner.logo.altText || partner.name}
-                    className="h-16 sm:h-32 w-auto object-contain"
+                    className="h-16 sm:h-32 w-auto object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                 ) : (
-                  <div className="h-16 sm:h-32 flex items-center justify-center">
+                  <div className="h-16 sm:h-32 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                     <span className="text-navy/80 font-medium text-sm">
                       {partner.shortName}
                     </span>
                   </div>
                 )}
-                <p className="text-navy/70 text-xs sm:text-sm font-medium mt-2 text-center">
+                <p className="text-navy/70 text-xs sm:text-sm font-medium mt-2 text-center opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                   {partner.name}
                 </p>
               </>
@@ -61,7 +61,7 @@ export default function PartnersStrip({ partners }: PartnersStripProps) {
                 href={partner.websiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center px-6 hover:opacity-80 transition-opacity"
+                className="group flex flex-col items-center justify-center px-6"
                 aria-label={`${partner.name} (opens in new tab)`}
               >
                 {content}
@@ -69,7 +69,7 @@ export default function PartnersStrip({ partners }: PartnersStripProps) {
             ) : (
               <div
                 key={partner.name}
-                className="flex flex-col items-center justify-center px-6"
+                className="group flex flex-col items-center justify-center px-6"
               >
                 {content}
               </div>

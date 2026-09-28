@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
+import { PETITION_URL } from "../lib/links";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -46,10 +47,10 @@ export default function Header() {
           {/* Sign The Petition CTA */}
           <div className="hidden md:flex flex-1 justify-end">
             <a
-              href="https://actionnetwork.org/petitions/power-to-the-people"
+              href={PETITION_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-coral px-6 py-2.5 text-navy font-bold text-sm uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-2"
+              className="rounded-full bg-coral-deep px-6 py-2.5 text-white font-bold text-sm uppercase tracking-wider hover:bg-coral-deep-dark transition-colors inline-flex items-center gap-2"
             >
               Sign The Petition
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

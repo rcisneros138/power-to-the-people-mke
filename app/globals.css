@@ -1,9 +1,19 @@
 @import "tailwindcss";
+/* Powers every `prose` block that renders WordPress HTML: /about,
+   /resources, /get-involved, /news/[slug] and NewsGrid. Without this the
+   prose-* modifiers on those pages compile to nothing. */
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-cream: #F5EBD6;
   --color-coral: #FF4715;
   --color-coral-dark: #E03D10;
+  /* Small-text surfaces: white on --color-coral is only 3.41:1 and navy is
+     4.19:1, both under the 4.5:1 WCAG AA floor for text below 18.66px bold.
+     This shade carries white at 4.59:1 and clears SC 1.4.11 against cream
+     (3.88:1). Use plain --color-coral wherever the label is >=text-xl bold. */
+  --color-coral-deep: #D83C11;
+  --color-coral-deep-dark: #BE340E;
   --color-navy: #133020;
   --color-navy-dark: #0D1F15;
   --color-teal: #FFB966;

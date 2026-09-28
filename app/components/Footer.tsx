@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { PETITION_URL } from "../lib/links";
 
 const quickLinks = [
   { href: "/about", label: "About" },
@@ -15,13 +16,15 @@ export default function Footer() {
           {/* About */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Image
-                src="/logo.svg"
-                alt="Power to the People logo"
-                width={32}
-                height={34}
-                className="h-8 w-auto"
-              />
+              <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-cream p-1.5">
+                <Image
+                  src="/logo.svg"
+                  alt="Power to the People logo"
+                  width={32}
+                  height={34}
+                  className="h-8 w-auto"
+                />
+              </span>
               <h3 className="text-lg font-extrabold">Power to the People MKE</h3>
             </div>
             <p className="text-white/70 text-sm leading-relaxed">
@@ -54,10 +57,10 @@ export default function Footer() {
               Add your name to demand public power for Milwaukee.
             </p>
             <a
-              href="https://actionnetwork.org/petitions/power-to-the-people"
+              href={PETITION_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-coral text-navy px-5 py-3 text-sm font-bold uppercase tracking-wide hover:bg-coral-dark transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 bg-coral-deep text-white px-5 py-3 text-sm font-bold uppercase tracking-wide hover:bg-coral-deep-dark transition-all hover:scale-105"
             >
               Sign The Petition
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">

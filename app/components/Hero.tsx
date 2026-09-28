@@ -1,3 +1,5 @@
+import { PETITION_URL } from "../lib/links";
+
 export default function Hero() {
   return (
     <section className="bg-teal min-h-[80vh] flex items-center justify-center py-16 sm:py-20">
@@ -29,7 +31,7 @@ export default function Hero() {
 
         {/* CTA Button */}
         <a
-          href="https://actionnetwork.org/petitions/power-to-the-people"
+          href={PETITION_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-full bg-coral px-8 py-4 text-white font-bold text-xl uppercase tracking-wider hover:bg-coral-dark transition-colors inline-flex items-center gap-3 hero-entrance-d2"
