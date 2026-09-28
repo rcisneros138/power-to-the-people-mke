@@ -82,7 +82,7 @@
     text-shadow: 6px 6px 0 var(--color-coral);
   }
 
-  .text-shadow-sm {
+  .text-shadow-coral-sm {
     text-shadow: 3px 3px 0 var(--color-coral);
   }
 }
@@ -96,6 +96,12 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+/* Photographic reveal: the frame wipes up from its lower edge, like a print
+   coming out of the developer. Reserved for documentary photography. */
+@keyframes scroll-reveal {
+  from { opacity: 0; clip-path: inset(100% 0 0 0); transform: translateY(16px); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0);   transform: translateY(0); }
+}
 
 .scroll-animate { opacity: 0; }
 .scroll-animate.is-visible {
@@ -106,11 +112,13 @@
 }
 .scroll-animate.is-visible[data-animation="fade-up"] { animation-name: scroll-fade-up; }
 .scroll-animate.is-visible[data-animation="fade-in"] { animation-name: scroll-fade-in; }
+.scroll-animate.is-visible[data-animation="reveal"] { animation-name: scroll-reveal; }
 
 /* Hero CSS-only entrance (above the fold, no JS) */
 .hero-entrance { animation: scroll-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .hero-entrance-d1 { animation: scroll-fade-up 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .hero-entrance-d2 { animation: scroll-fade-up 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-reveal { animation: scroll-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 /* Rising-line chart — drawn when its scroll-animate parent becomes visible */
 .rising-line {
@@ -154,8 +162,9 @@
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .scroll-animate, .hero-entrance, .hero-entrance-d1, .hero-entrance-d2 {
+  .scroll-animate, .hero-entrance, .hero-entrance-d1, .hero-entrance-d2, .hero-reveal {
     opacity: 1 !important; transform: none !important; animation: none !important;
+    clip-path: none !important;
   }
   .rising-line { stroke-dasharray: none; stroke-dashoffset: 0; }
   .rising-label, .handshake-icon { opacity: 1 !important; transform: none !important; animation: none !important; }
@@ -184,5 +193,11 @@
 .cal-tab-active { background: var(--cal-primary); color: var(--cal-primary-fg); border-color: var(--cal-primary); }
 /* No-JS fallback */
 @media (scripting: none) {
-  .scroll-animate { opacity: 1 !important; transform: none !important; }
+  .scroll-animate, .hero-reveal {
+    opacity: 1 !important; transform: none !important; clip-path: none !important;
+    animation: none !important;
+  }
+  .rising-line { stroke-dasharray: none; stroke-dashoffset: 0; }
+  .rising-label, .handshake-icon { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .clock-arc { stroke-dashoffset: var(--clock-target-offset) !important; }
 }
