@@ -4,8 +4,8 @@ import Link from "next/link";
 import Script from "next/script";
 import { AnimateOnScroll, Header, Footer } from "../../components";
 import { getPostBySlug, getAllPostSlugs } from "../../lib/wordpress";
+import { SITE_URL } from "../../lib/site";
 
-const SITE_URL = "https://powertothepeoplemke.org";
 const SITE_NAME = "Power to the People Milwaukee";
 
 interface PageProps {

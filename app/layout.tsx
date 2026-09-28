@@ -4,9 +4,9 @@ import { Source_Sans_3, Bebas_Neue, Spectral } from "next/font/google";
 import localFont from "next/font/local";
 import { AnnouncementBar } from "./components";
 import { getActiveAnnouncement } from "./lib/wordpress";
+import { SITE_URL, IS_PRODUCTION } from "./lib/site";
 import "./globals.css";
 
-const SITE_URL = "https://powertothepeoplemke.org";
 const SITE_NAME = "Power to the People Milwaukee";
 const SITE_DESCRIPTION =
   "A Milwaukee campaign to replace We Energies with a publicly owned municipal utility. Lower bills, better reliability, and a cleaner future for Milwaukee.";
@@ -84,17 +84,21 @@ export const metadata: Metadata = {
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-snippet": -1,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
-    },
-  },
+  // Belt and braces with robots.txt: staging also carries a meta noindex, so a
+  // crawler that reaches a page directly still won't index it.
+  robots: IS_PRODUCTION
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-snippet": -1,
+          "max-image-preview": "large",
+          "max-video-preview": -1,
+        },
+      }
+    : { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
