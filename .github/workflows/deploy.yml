@@ -3,6 +3,12 @@ name: Deploy to Cloudflare
 on:
   push:
     branches: [main, staging]
+  # The Solidarity Tech calendar is fetched at build time, so the site needs a
+  # rebuild to notice new or cancelled events. Actions minutes are free on a
+  # public repo and a build is ~60s, so hourly costs nothing and caps staleness
+  # at an hour. Runs against the default branch, i.e. production.
+  schedule:
+    - cron: "0 * * * *"
   repository_dispatch:
     types: [wordpress_update]
   workflow_dispatch:
