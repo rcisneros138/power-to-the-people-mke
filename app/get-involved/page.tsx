@@ -179,7 +179,7 @@ export default async function GetInvolvedPage() {
               Pick a date and Solidarity Tech sends you a reminder.
             </p>
 
-            <UpcomingEvents sessions={campaignSessions} limit={3} />
+            <UpcomingEvents sessions={campaignSessions} />
           </div>
         </AnimateOnScroll>
 

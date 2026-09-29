@@ -37,16 +37,12 @@ export interface CalendarSession {
   title: string;
   /** Series title, for grouping and for the cleaner display label. */
   eventTitle: string;
-  description: string;
   /** Public RSVP page on Solidarity Tech. */
   url: string | null;
-  imageUrl: string | null;
   /** ISO 8601 WITH offset. Keep the offset — it is the only trustworthy time signal. */
   start: string;
-  end: string | null;
   isVirtual: boolean;
   location: string | null;
-  tags: string[];
   isCampaignEvent: boolean;
 }
 
@@ -110,8 +106,7 @@ export function parseCalendarFeed(xml: string, now: Date = new Date()): Calendar
       const startMs = Date.parse(start);
       if (Number.isNaN(startMs)) continue;
 
-      const end = text(session.end_time) || null;
-      const endMs = end ? Date.parse(end) : NaN;
+      const endMs = Date.parse(text(session.end_time));
 
       // Drop anything already finished. Use end when it parses, so an event
       // running right now stays visible for its duration.
@@ -129,14 +124,10 @@ export function parseCalendarFeed(xml: string, now: Date = new Date()): Calendar
         eventId: text(event["@_id"]),
         title: sessionTitle || eventTitle,
         eventTitle,
-        description: text(event.description),
         url: text(event.url) || null,
-        imageUrl: text(event.image_url) || null,
         start,
-        end,
         isVirtual: text(session.event_type) === "virtual",
         location: text(session.location) || null,
-        tags,
         isCampaignEvent: tags.includes(PTTP_TAG),
       });
     }
@@ -163,15 +154,6 @@ export async function getCalendarSessions(): Promise<CalendarSession[]> {
   }
 }
 
-/** All distinct tags present, most frequent first — drives the filter UI. */
-export function collectTags(sessions: CalendarSession[]): string[] {
-  const counts = new Map<string, number>();
-  for (const s of sessions) {
-    for (const tag of s.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
-  }
-  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([t]) => t);
-}
-
 const dateFmt = new Intl.DateTimeFormat("en-US", {
   timeZone: CAMPAIGN_TZ, weekday: "short", month: "short", day: "numeric",
 });
@@ -186,7 +168,7 @@ const weekdayFmt = new Intl.DateTimeFormat("en-US", { timeZone: CAMPAIGN_TZ, wee
 
 export const formatSessionDate = (iso: string) => dateFmt.format(new Date(iso));
 export const formatSessionTime = (iso: string) => timeFmt.format(new Date(iso));
-export const formatMonthLabel = (iso: string) => monthFmt.format(new Date(iso));
+const formatMonthLabel = (iso: string) => monthFmt.format(new Date(iso));
 export const formatDayNumber = (iso: string) => dayNumFmt.format(new Date(iso));
 export const formatWeekday = (iso: string) => weekdayFmt.format(new Date(iso));
 

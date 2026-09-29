@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
-  parseCalendarFeed, collectTags, groupByMonth, formatSessionTime,
-  formatSessionDate, formatMonthLabel, splitLocation, CAMPAIGN_TZ, PTTP_TAG,
+  parseCalendarFeed, groupByMonth, formatSessionTime,
+  formatSessionDate, splitLocation, CAMPAIGN_TZ, PTTP_TAG,
 } from "./calendar";
 
 const NOW = new Date("2026-09-29T00:00:00Z");
@@ -90,19 +90,24 @@ describe("filtering", () => {
     expect(parseCalendarFeed(noisy, NOW)).toHaveLength(0);
   });
 
-  it("survives a session with no end_time", () => {
+  it("falls back to start when a session has no end_time", () => {
     const noEnd = phoneBank.replace(/<end_time>.*?<\/end_time>/, "");
     const [s] = parseCalendarFeed(feed(noEnd), NOW);
-    expect(s.end).toBeNull();
     expect(s.start).toBe("2026-10-08T19:30:00-04:00");
+    // and one whose start is already past drops out, with no end to rescue it
+    const pastNoEnd = noEnd.replace("2026-10-08T19:30:00-04:00", "2026-09-03T19:30:00-04:00");
+    expect(parseCalendarFeed(feed(pastNoEnd), NOW)).toHaveLength(0);
   });
 });
 
 describe("normalisation", () => {
-  it("flattens event and session tags and flags campaign events", () => {
-    const [s] = parseCalendarFeed(feed(phoneBank), NOW);
-    expect(s.tags).toEqual(expect.arrayContaining([PTTP_TAG, "Outreach"]));
-    expect(s.isCampaignEvent).toBe(true);
+  it("flags a campaign event from a tag on either the event or the session", () => {
+    expect(parseCalendarFeed(feed(phoneBank), NOW)[0].isCampaignEvent).toBe(true);
+    // tag on the session rather than the series
+    const onSession = phoneBank
+      .replace(`<tags><tag>${PTTP_TAG}</tag></tags>`, "<tags><tag>Outreach</tag></tags>")
+      .replace("<tags><tag>Outreach</tag></tags>\n      </session>", `<tags><tag>${PTTP_TAG}</tag></tags>\n      </session>`);
+    expect(parseCalendarFeed(feed(onSession), NOW)[0].isCampaignEvent).toBe(true);
   });
 
   it("does not flag untagged chapter events as campaign events", () => {
@@ -144,11 +149,6 @@ describe("normalisation", () => {
 });
 
 describe("helpers", () => {
-  it("orders tags by frequency", () => {
-    const sessions = parseCalendarFeed(feed(phoneBank), NOW);
-    expect(collectTags(sessions)).toContain(PTTP_TAG);
-  });
-
   it("groups by Central month, chronologically", () => {
     const two = feed(`
       <event id="1"><title>A</title><sessions><session id="x">
@@ -161,7 +161,10 @@ describe("helpers", () => {
 
   it("puts a late-UTC session in the correct Central month", () => {
     // 2026-11-01T02:00Z is still 31 October in Milwaukee.
-    expect(formatMonthLabel("2026-11-01T02:00:00+00:00")).toBe("October 2026");
+    const late = feed(`
+      <event id="1"><title>Late</title><sessions><session id="z">
+        <start_time>2026-11-01T02:00:00+00:00</start_time></session></sessions></event>`);
+    expect(groupByMonth(parseCalendarFeed(late, NOW))[0].month).toBe("October 2026");
   });
 });
 

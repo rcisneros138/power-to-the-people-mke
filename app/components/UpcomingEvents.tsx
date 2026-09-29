@@ -15,14 +15,8 @@ import {
  * share is what's expensive and easy to get wrong — the feed parsing and the
  * pinned America/Chicago formatters — and that already lives in lib/calendar.
  */
-export default function UpcomingEvents({
-  sessions,
-  limit = 3,
-}: {
-  sessions: CalendarSession[];
-  limit?: number;
-}) {
-  const next = sessions.slice(0, limit);
+export default function UpcomingEvents({ sessions }: { sessions: CalendarSession[] }) {
+  const next = sessions.slice(0, 3);
 
   if (next.length === 0) {
     return (
