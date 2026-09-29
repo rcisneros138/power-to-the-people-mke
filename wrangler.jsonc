@@ -13,10 +13,11 @@
   "env": {
     "staging": {
       "name": "pttp-staging",
-      // Cloudflare Access is bound to the custom domain only — leaving the
-      // workers.dev URL enabled would publish an unguarded copy of unreleased
-      // work at pttp-staging.<subdomain>.workers.dev, bypassing the login.
-      "workers_dev": false
+      // Reachable on workers.dev while there's no custom domain bound. The
+      // build marks every non-production origin noindex + robots Disallow, so
+      // it stays out of search, but the URL is public to anyone who has it.
+      // Set back to false once a Custom Domain + Access policy front it.
+      "workers_dev": true
     }
   }
 }

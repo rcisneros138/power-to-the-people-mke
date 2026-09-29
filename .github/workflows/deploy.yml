@@ -32,7 +32,7 @@ jobs:
           WORDPRESS_GRAPHQL_URL: ${{ secrets.WORDPRESS_GRAPHQL_URL }}
           NEXT_PUBLIC_SITE_URL: >-
             ${{ github.ref == 'refs/heads/staging'
-                && 'https://staging.powertothepeoplemke.org'
+                && 'https://pttp-staging.rcisneros138.workers.dev'
                 || 'https://powertothepeoplemke.org' }}
 
       - uses: cloudflare/wrangler-action@v3
