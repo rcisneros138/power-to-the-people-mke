@@ -7,13 +7,13 @@ import { getPage } from "../lib/wordpress";
 export const metadata: Metadata = {
   title: "About the Public Power Campaign",
   description:
-    "Learn why Milwaukee should replace We Energies with a publicly owned municipal utility. Lower rates, better reliability, and democratic control under Wisconsin Chapter 197.",
+    "Why Milwaukee should replace We Energies with a utility the city owns, and how Wisconsin Chapter 197 already allows it.",
   alternates: { canonical: "/about" },
   openGraph: {
     url: "/about",
     title: "About the Public Power Campaign | Power to the People MKE",
     description:
-      "Learn why Milwaukee should replace We Energies with a publicly owned municipal utility.",
+      "Why Milwaukee should replace We Energies with a utility the city owns.",
     images: ["/opengraph-image"],
   },
 };
@@ -41,7 +41,7 @@ const benefits: Benefit[] = [
     stat: "2×",
     title: "More Reliable",
     description:
-      "Public utilities average 59 minutes of downtime a year — less than half the 133 minutes for private utilities.",
+      "Public utilities average 59 minutes of outage a year. Private utilities average 133.",
     icon: (
       <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
@@ -52,7 +52,7 @@ const benefits: Benefit[] = [
     stat: "Local",
     title: "Local Control",
     description:
-      "Decisions are made by elected officials accountable to residents — not distant shareholders seeking profit.",
+      "Rates and spending get set by officials you can vote out, in meetings you can show up to.",
     icon: (
       <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
@@ -63,7 +63,7 @@ const benefits: Benefit[] = [
     stat: "Clean",
     title: "Clean Energy",
     description:
-      "A public utility can prioritize renewables and climate resilience without pressure from shareholders.",
+      "A public utility can invest in renewables without clearing it with investors first.",
     icon: (
       <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
@@ -136,9 +136,8 @@ export default async function AboutPage() {
             <div className="w-24 h-1.5 bg-coral mx-auto mb-8 rounded-full" aria-hidden="true" />
             <p className="text-xl sm:text-2xl text-navy/80 leading-relaxed max-w-3xl mx-auto">
               We&apos;re a coalition of Milwaukee community organizations working to
-              create a publicly owned municipal utility — because essential services
-              like electricity should be controlled by the people who use them, not
-              distant shareholders seeking profit.
+              replace We Energies with a utility the city owns. Electricity isn&apos;t
+              optional. The people who depend on it should be the ones who run it.
             </p>
           </div>
         </section>
@@ -203,14 +202,13 @@ export default async function AboutPage() {
               }
             >
               <p>
-                We&apos;re working to replace We Energies with a municipal utility owned
-                and operated by the City of Milwaukee. Under Wisconsin law, cities already
-                have the right to create their own public utilities — we&apos;re advocating
-                for Milwaukee to exercise it.
+                We want the City of Milwaukee to own and run its own electric utility.
+                Wisconsin law already allows it. What&apos;s missing is the decision to
+                do it.
               </p>
               <p>
-                This is energy democracy: a utility accountable to the residents it serves,
-                run in the public interest rather than for private profit.
+                That means rates set in public meetings instead of boardrooms, and a
+                utility that answers to the people paying the bills.
               </p>
             </ContentSection>
           </AnimateOnScroll>
@@ -225,8 +223,9 @@ export default async function AboutPage() {
                   Why Public Power?
                 </h2>
                 <p className="text-lg text-navy/70">
-                  Across the country, publicly owned utilities deliver lower rates, better
-                  reliability, and a real say for the communities they serve.
+                  Cities across the country already run their own utilities. They charge
+                  less and go dark less often. And when something breaks, the people
+                  responsible answer to voters.
                 </p>
               </div>
             </AnimateOnScroll>
@@ -272,9 +271,8 @@ export default async function AboutPage() {
                 <p className="lg:col-span-6 text-lg sm:text-xl text-white/80 leading-relaxed">
                   On March 1, 2024, Milwaukeeans walked petitions for a public utility into
                   City Hall and carried them upstairs to the mayor&apos;s office. Neighbors,
-                  union members and organizers filled the balconies. Public power is not an
-                  abstraction in this city — it is a demand people have already made in
-                  person.
+                  union members and organizers filled the balconies. Public power isn&apos;t a
+                  policy paper here. It has a date and an address.
                 </p>
               </div>
             </AnimateOnScroll>
@@ -332,8 +330,8 @@ export default async function AboutPage() {
                 Our Coalition
               </h2>
               <p className="text-xl text-white/80 leading-relaxed max-w-2xl mx-auto mb-10">
-                Power to the People brings together a broad movement of Milwaukeeans who
-                believe our city deserves better than what We Energies provides.
+                We&apos;re union members, environmental groups, community organizations
+                and neighbors who think Milwaukee can do better than We Energies.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 {coalition.map((group) => (
@@ -357,8 +355,8 @@ export default async function AboutPage() {
                 Join the Movement
               </h2>
               <p className="text-xl text-white mb-9 font-medium max-w-2xl mx-auto">
-                Whether you can volunteer, donate, or simply spread the word, every
-                contribution moves Milwaukee closer to public power.
+                Knock doors, make calls, chip in, or just tell a neighbor. All of it
+                counts.
               </p>
               <Link
                 href="/get-involved"
