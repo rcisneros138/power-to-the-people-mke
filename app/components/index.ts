@@ -8,6 +8,7 @@ export { default as RisingLineChart } from "./RisingLineChart";
 export { default as HandshakeTile } from "./HandshakeTile";
 export { default as OutageClocks } from "./OutageClocks";
 export { default as CTABanner } from "./CTABanner";
+export { default as CalendarBrowser } from "./CalendarBrowser";
 export { default as PartnersStrip } from "./PartnersStrip";
 export { default as FAQ } from "./FAQ";
 export { default as MobileMenu } from "./MobileMenu";

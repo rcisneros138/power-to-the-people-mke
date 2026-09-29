@@ -171,6 +171,12 @@
   .clock-arc { transition: none !important; stroke-dashoffset: var(--clock-target-offset) !important; }
 }
 
+/* Calendar view switch: the filter is React state, so with scripting off it
+   would be a control that does nothing. Hide it and show the static note
+   (which links out to the full chapter calendar) instead. The server-rendered
+   list — Power to the People events, the product default — stays either way. */
+.no-js-only { display: none; }
+
 /* Calendar component primitives */
 .cal-btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -193,6 +199,8 @@
 .cal-tab-active { background: var(--cal-primary); color: var(--cal-primary-fg); border-color: var(--cal-primary); }
 /* No-JS fallback */
 @media (scripting: none) {
+  .js-only { display: none !important; }
+  .no-js-only { display: block !important; }
   .scroll-animate, .hero-reveal {
     opacity: 1 !important; transform: none !important; clip-path: none !important;
     animation: none !important;
