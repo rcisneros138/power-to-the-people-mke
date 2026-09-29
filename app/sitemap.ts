@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getAllPostSlugs } from "./lib/wordpress";
+import { SITE_URL } from "./lib/site";
 
 export const dynamic = "force-static";
-
-const SITE_URL = "https://powertothepeoplemke.org";
 
 const STATIC_ROUTES: Array<{
   path: string;

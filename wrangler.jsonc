@@ -5,5 +5,18 @@
     "directory": "./out",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
+  },
+  // Client-review environment. Deployed from the `staging` branch to a separate
+  // Worker so production is never touched. Routes are bound in the Cloudflare
+  // dashboard as Custom Domains (same convention as prod — deliberately NOT
+  // declared here, since dashboard-bound domains conflict with `routes`).
+  "env": {
+    "staging": {
+      "name": "pttp-staging",
+      // Cloudflare Access is bound to the custom domain only — leaving the
+      // workers.dev URL enabled would publish an unguarded copy of unreleased
+      // work at pttp-staging.<subdomain>.workers.dev, bypassing the login.
+      "workers_dev": false
+    }
   }
 }
