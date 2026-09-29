@@ -203,3 +203,16 @@ export function groupByMonth(
   }
   return groups;
 }
+
+/**
+ * Solidarity Tech stores location as one string: "Venue - 123 St, City, ST 00000, USA".
+ * Split it so a venue can be shown without the postal tail. Shared by the
+ * calendar page and the Get Involved teaser.
+ */
+export function splitLocation(location: string): { venue: string; address: string } {
+  const parts = location.split(" - ");
+  return {
+    venue: parts[0],
+    address: parts.slice(1).join(" - ").replace(/,\s*USA\s*$/, ""),
+  };
+}

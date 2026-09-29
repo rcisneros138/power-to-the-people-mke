@@ -8,6 +8,7 @@ import {
   formatWeekday,
   groupByMonth,
   type CalendarSession,
+  splitLocation,
 } from "../lib/calendar";
 
 const CHAPTER_CALENDAR_URL = "https://dsamke.solidarity.tech/event-calendar";
@@ -31,14 +32,6 @@ function sessionNote(s: CalendarSession): string | null {
 }
 
 /** "Venue - 123 Street, City, ST 00000, USA" → venue and a shorter address. */
-function splitPlace(location: string) {
-  const parts = location.split(" - ");
-  return {
-    venue: parts[0],
-    address: parts.slice(1).join(" - ").replace(/,\s*USA\s*$/, ""),
-  };
-}
-
 const WEEKDAY_NAME: Record<string, string> = {
   Sun: "Sunday", Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday",
   Thu: "Thursday", Fri: "Friday", Sat: "Saturday",
@@ -97,7 +90,7 @@ function toSeries(sessions: CalendarSession[]): Series[] {
       const first = group[0];
       const weekdays = new Set(group.map((s) => formatWeekday(s.start)));
       const place =
-        first.isVirtual || !first.location ? null : splitPlace(first.location);
+        first.isVirtual || !first.location ? null : splitLocation(first.location);
       const name = WEEKDAY_NAME[[...weekdays][0]];
       return {
         key,

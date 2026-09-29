@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { AnimateOnScroll, Header, Footer } from "../components";
+import { AnimateOnScroll, Header, Footer, UpcomingEvents } from "../components";
 import { getPage } from "../lib/wordpress";
+import { getCalendarSessions } from "../lib/calendar";
 import { PETITION_URL } from "../lib/links";
 
 const CONTACT_REPS_URL =
@@ -18,15 +19,6 @@ const SOLIDARITY_TECH_FORM_URL =
 const SOLIDARITY_TECH_FORM_PUBLIC_URL =
   "https://dsamke.solidarity.tech/power-to-the-people-interest-form";
 
-// Upcoming-events list. Same embed contract as the calendar and the interest
-// form: `<page-url>/embed` + `?breakout=true`. NOTE — as of 2026-09-28 the ST
-// `pttp-events` page has NOT had the chrome-strip + height-broadcast snippet
-// pasted into Page Settings -> Head HTML, so until that lands this iframe shows
-// ST's own nav/footer and holds the fallback min-height instead of auto-sizing.
-const SOLIDARITY_TECH_EVENTS_URL =
-  "https://dsamke.solidarity.tech/pttp-events/embed?breakout=true";
-const SOLIDARITY_TECH_EVENTS_PUBLIC_URL =
-  "https://dsamke.solidarity.tech/pttp-events";
 
 export const metadata: Metadata = {
   title: "Get Involved — Join the Public Power Campaign",
@@ -99,7 +91,12 @@ const waysToHelp: WayToHelp[] = [
 ];
 
 export default async function GetInvolvedPage() {
-  const wpPage = await getPage("get-involved");
+  const [wpPage, sessions] = await Promise.all([
+    getPage("get-involved"),
+    getCalendarSessions(),
+  ]);
+  // Campaign events only here; the calendar page is where the whole chapter lives.
+  const campaignSessions = sessions.filter((s) => s.isCampaignEvent);
 
   return (
     <>
@@ -178,34 +175,11 @@ export default async function GetInvolvedPage() {
               Upcoming Events
             </h2>
             <p className="text-navy/70 text-center mb-10 max-w-2xl mx-auto">
-              Canvasses, meetings, and community forums you can join. RSVP through
-              any event below and you&apos;ll get a confirmation email.
+              Canvasses, phone banks and working group meetings you can join.
+              Pick a date and Solidarity Tech sends you a reminder.
             </p>
 
-            <div className="bg-white rounded-xl border border-navy/5 overflow-hidden shadow-sm">
-              <iframe
-                id="solidarity-events-list"
-                data-solidarity-tech="true"
-                src={SOLIDARITY_TECH_EVENTS_URL}
-                title="Power to the People MKE — upcoming events"
-                className="w-full block border-0"
-                style={{ minHeight: 600 }}
-                loading="lazy"
-              />
-            </div>
-
-            <p className="mt-4 text-center text-sm text-navy/60">
-              Having trouble viewing the list?{" "}
-              <a
-                href={SOLIDARITY_TECH_EVENTS_PUBLIC_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-coral underline hover:text-coral-dark transition-colors"
-              >
-                Open it in a new tab
-              </a>
-              .
-            </p>
+            <UpcomingEvents sessions={campaignSessions} limit={3} />
           </div>
         </AnimateOnScroll>
 

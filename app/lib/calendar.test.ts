@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   parseCalendarFeed, collectTags, groupByMonth, formatSessionTime,
-  formatSessionDate, formatMonthLabel, CAMPAIGN_TZ, PTTP_TAG,
+  formatSessionDate, formatMonthLabel, splitLocation, CAMPAIGN_TZ, PTTP_TAG,
 } from "./calendar";
 
 const NOW = new Date("2026-09-29T00:00:00Z");
@@ -162,5 +162,28 @@ describe("helpers", () => {
   it("puts a late-UTC session in the correct Central month", () => {
     // 2026-11-01T02:00Z is still 31 October in Milwaukee.
     expect(formatMonthLabel("2026-11-01T02:00:00+00:00")).toBe("October 2026");
+  });
+});
+
+describe("splitLocation", () => {
+  it("separates venue from address and drops the country tail", () => {
+    const { venue, address } = splitLocation(
+      "Central United Methodist Church - 639 N 25th St, Milwaukee, WI 53233, USA"
+    );
+    expect(venue).toBe("Central United Methodist Church");
+    expect(address).toBe("639 N 25th St, Milwaukee, WI 53233");
+  });
+
+  it("returns the whole string as venue when there is no separator", () => {
+    expect(splitLocation("Zoom").venue).toBe("Zoom");
+    expect(splitLocation("Zoom").address).toBe("");
+  });
+
+  it("keeps hyphenated venue names intact", () => {
+    const { venue, address } = splitLocation(
+      "Festival Foods - Community Room - 6000 31st St, Kenosha, WI 53144, USA"
+    );
+    expect(venue).toBe("Festival Foods");
+    expect(address).toBe("Community Room - 6000 31st St, Kenosha, WI 53144");
   });
 });
