@@ -50,14 +50,36 @@ export interface CalendarSession {
   isCampaignEvent: boolean;
 }
 
-function asArray<T>(v: T | T[] | undefined | null): T[] {
-  if (v === undefined || v === null) return [];
-  return Array.isArray(v) ? v : [v];
+/** fast-xml-parser returns untyped nodes: text, attributes, or nested nodes. */
+type XmlValue = string | number | boolean | null | undefined | XmlNode | XmlValue[];
+interface XmlNode {
+  [key: string]: XmlValue;
 }
 
-function text(v: unknown): string {
+/** A node's child, when that child is itself a node (or nodes). */
+function node(v: XmlValue): XmlNode | undefined {
+  return v !== null && typeof v === "object" && !Array.isArray(v) ? v : undefined;
+}
+
+/** XML collapses a single repeated child to one value; normalise to a list. */
+function asArray(v: XmlValue): XmlNode[] {
+  if (v === undefined || v === null) return [];
+  const list = Array.isArray(v) ? v : [v];
+  return list.map(node).filter((n): n is XmlNode => n !== undefined);
+}
+
+function text(v: XmlValue): string {
   if (v === undefined || v === null) return "";
+  if (typeof v === "object") return "";
   return String(v).trim();
+}
+
+/** Flatten <tags><tag>a</tag><tag>b</tag></tags> to ["a","b"]. */
+function tagList(container: XmlValue): string[] {
+  const tags = node(container)?.tag;
+  if (tags === undefined || tags === null) return [];
+  const list = Array.isArray(tags) ? tags : [tags];
+  return list.map(text).filter(Boolean);
 }
 
 /** Entries the chapter leaves in the feed but nobody should see on a public site. */
@@ -73,22 +95,22 @@ export function parseCalendarFeed(xml: string, now: Date = new Date()): Calendar
     trimValues: true,
   });
 
-  const doc = parser.parse(xml) as Record<string, any>;
-  const events = asArray(doc?.events?.event);
+  const doc = parser.parse(xml) as XmlNode;
+  const events = asArray(node(doc.events)?.event);
   const sessions: CalendarSession[] = [];
 
   for (const event of events) {
-    const eventTitle = text(event?.title);
-    const eventTags = asArray(event?.tags?.tag).map(text).filter(Boolean);
+    const eventTitle = text(event.title);
+    const eventTags = tagList(event.tags);
 
-    for (const session of asArray(event?.sessions?.session)) {
-      const start = text(session?.start_time);
+    for (const session of asArray(node(event.sessions)?.session)) {
+      const start = text(session.start_time);
       if (!start) continue;
 
       const startMs = Date.parse(start);
       if (Number.isNaN(startMs)) continue;
 
-      const end = text(session?.end_time) || null;
+      const end = text(session.end_time) || null;
       const endMs = end ? Date.parse(end) : NaN;
 
       // Drop anything already finished. Use end when it parses, so an event
@@ -96,24 +118,24 @@ export function parseCalendarFeed(xml: string, now: Date = new Date()): Calendar
       const finishedAt = Number.isNaN(endMs) ? startMs : endMs;
       if (finishedAt < now.getTime()) continue;
 
-      const sessionTitle = text(session?.title);
+      const sessionTitle = text(session.title);
       if (isNoise(eventTitle, sessionTitle)) continue;
 
-      const sessionTags = asArray(session?.tags?.tag).map(text).filter(Boolean);
+      const sessionTags = tagList(session.tags);
       const tags = Array.from(new Set([...eventTags, ...sessionTags]));
 
       sessions.push({
-        id: text(session?.["@_id"]) || `${text(event?.["@_id"])}-${start}`,
-        eventId: text(event?.["@_id"]),
+        id: text(session["@_id"]) || `${text(event["@_id"])}-${start}`,
+        eventId: text(event["@_id"]),
         title: sessionTitle || eventTitle,
         eventTitle,
-        description: text(event?.description),
-        url: text(event?.url) || null,
-        imageUrl: text(event?.image_url) || null,
+        description: text(event.description),
+        url: text(event.url) || null,
+        imageUrl: text(event.image_url) || null,
         start,
         end,
-        isVirtual: text(session?.event_type) === "virtual",
-        location: text(session?.location) || null,
+        isVirtual: text(session.event_type) === "virtual",
+        location: text(session.location) || null,
         tags,
         isCampaignEvent: tags.includes(PTTP_TAG),
       });
