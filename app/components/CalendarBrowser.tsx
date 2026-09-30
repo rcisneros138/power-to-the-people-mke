@@ -313,7 +313,7 @@ export default function CalendarBrowser({ sessions }: { sessions: CalendarSessio
           <h2 className="text-navy text-2xl mb-3">No campaign events are scheduled yet</h2>
           <p className="text-navy/80 leading-relaxed max-w-prose">
             Nothing is on the Power to the People calendar right now. The chapter is still
-            meeting — switch to all Milwaukee DSA events to see what&apos;s coming up.
+            meeting, so switch to all Milwaukee DSA events to see what&apos;s coming up.
           </p>
           <button
             type="button"
@@ -336,8 +336,8 @@ export default function CalendarBrowser({ sessions }: { sessions: CalendarSessio
       )}
 
       <p className="mt-10 max-w-prose text-navy/75 text-sm leading-relaxed">
-        Every date opens its own RSVP page on Solidarity Tech, which sends you a reminder —
-        and the joining link, for anything online. Times are Central.{" "}
+        Every date opens its own RSVP page on Solidarity Tech, which sends you a reminder
+        and, for anything online, the joining link. Times are Central.{" "}
         <a
           href={CHAPTER_CALENDAR_URL}
           target="_blank"

@@ -9,7 +9,7 @@ const SOLIDARITY_TECH_PUBLIC_URL = "https://dsamke.solidarity.tech/event-calenda
 export const metadata: Metadata = {
   title: "Events & Calendar",
   description:
-    "Upcoming meetings, rallies, canvassing, and community forums for public power in Milwaukee. RSVP for events directly through our Solidarity Tech calendar.",
+    "Phone banks, canvasses, rallies and meetings for public power in Milwaukee. Every date has its own RSVP page on Solidarity Tech.",
   alternates: { canonical: "/calendar" },
   openGraph: {
     url: "/calendar",
@@ -52,8 +52,8 @@ export default async function CalendarPage() {
             <div className="w-24 h-1.5 bg-coral mb-8 rounded-full" aria-hidden="true" />
             <p className="text-xl sm:text-2xl text-navy/80 leading-relaxed max-w-2xl">
               Phone banks, canvasses and working group meetings for public power in
-              Milwaukee. Pick a date to RSVP — Solidarity Tech sends you a reminder
-              before it comes round.
+              Milwaukee. Pick a date to RSVP. Solidarity Tech will remind you before it
+              comes round.
             </p>
           </div>
         </section>
@@ -67,7 +67,7 @@ export default async function CalendarPage() {
                 </h2>
                 <p className="text-navy/80 leading-relaxed mb-3">
                   We couldn&apos;t reach Solidarity Tech when this page was last built, so
-                  the event list is missing. Nothing is cancelled — the events are still
+                  the event list is missing. Nothing is cancelled. The events are still
                   there.
                 </p>
                 <p className="text-navy/80 leading-relaxed mb-7">
